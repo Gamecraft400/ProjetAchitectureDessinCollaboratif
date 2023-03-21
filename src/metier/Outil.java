@@ -9,7 +9,14 @@ public class Outil
 	private String libelle;
 	private String couleur;
 
-	public static Outil creerOutil(String outil, String libelle, String couleur)
+	private int posX;
+	private int posY;
+
+	private int largeur;
+	private int hauteur;
+
+
+	public static Outil creerOutil(String outil, String libelle, String couleur, int posX, int posY, int largeur, int hauteur)
 	{
 		boolean contient = false;
 		for(int cpt = 0; cpt < Outil.OUTIL_DIPONIBLE.length;cpt++)
@@ -19,24 +26,28 @@ public class Outil
 		if(!contient)
 			return null;
 
-		return new Outil(outil, libelle, couleur);
+		return new Outil(outil, libelle, couleur, posX, posY, largeur, hauteur);
 	}
 
-	public static Outil creerOutil(String outil, String couleur)
+	public static Outil creerOutil(String outil, String couleur, int posX, int posY, int largeur, int hauteur)
 	{
-		return creerOutil(outil, "", couleur);
+		return creerOutil(outil, "", couleur, posX, posY, largeur, hauteur);
 	}
 
-	public Outil(String outil, String libelle, String couleur)
+	private Outil(String outil, String libelle, String couleur , int posX, int posY, int largeur, int hauteur)
 	{
 		this.outil = outil;
 		this.libelle = libelle;
 		this.couleur = couleur;
-	}
+		this.posX = posX;
+		this.posY = posY;
+		this.largeur = largeur;
+		this.hauteur = hauteur;
+	}	
 
-	public Outil(String outil, String couleur)
+	private Outil(String outil, String couleur, int posX, int posY, int largeur, int hauteur)
 	{
-		this(outil, "", couleur);
+		this(outil, "", couleur, posX, posY, largeur, hauteur);
 	}
 
 	public boolean setCouleur(String couleur)
@@ -55,9 +66,14 @@ public class Outil
 	public String getOutil	(){return this.outil;	}
 	public String getCouleur(){return this.couleur; }
 
+	public int getPosX		(){return this.posX;	}
+	public int getPosY		(){return this.posY;	}
+	public int getLargeur	(){return this.largeur;	}
+	public int getHauteur	(){return this.hauteur;	}
+
 	public String toString()
 	{
-		return "Outil selectionne" + this.outil + "de couleurs" + this.couleur;
+		return "Outil selectionne" + this.outil + "de couleur" + this.couleur + "( "+ this.posX + " , " + this.posY + " )";
 	}
 
 }
