@@ -73,6 +73,6 @@ public class FrameAccueil extends JFrame
 
     public static void main(String[] args)
     {
-        FrameAccueil frameAccueil = new FrameAccueil();
+        new FrameAccueil();
     }
 }
