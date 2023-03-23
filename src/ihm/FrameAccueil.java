@@ -7,8 +7,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controleur.Controleur;
+
 public class FrameAccueil extends JFrame
 {
+    private Controleur ctrl;
     private JPanel panelAccueil;
 
     private JLabel     lblPseudo;
@@ -19,8 +22,9 @@ public class FrameAccueil extends JFrame
     private JButton btnCreer;
     private JButton btnRejoindre;
 
-    public FrameAccueil()
+    public FrameAccueil(Controleur ctrl)
     {
+        this.ctrl = ctrl;
         this.setTitle("Accueil");
         this.setSize(500, 500);
         this.setLocationRelativeTo(null);
@@ -69,10 +73,5 @@ public class FrameAccueil extends JFrame
         //Ajout du panel à la frame
         this.add(this.panelAccueil);
         this.setVisible(true);
-    }
-
-    public static void main(String[] args)
-    {
-        new FrameAccueil();
     }
 }
