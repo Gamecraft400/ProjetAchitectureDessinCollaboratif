@@ -1,6 +1,8 @@
 package ihm;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -14,15 +16,23 @@ public class PanelChoixCouleur extends JPanel
 	public PanelChoixCouleur()
 	{
 		this.tabBtnCoul = new JButton[6];
+		this.setLayout(new GridLayout(1,6));
 
 		for(int cpt = 0; cpt < COULEURS_DISPONIBLE.length; cpt++)
 		{
 			this.tabBtnCoul[cpt] = new JButton();
 			this.tabBtnCoul[cpt].setBackground(COULEURS_DISPONIBLE[cpt]);
-		}
-
-		
+			this.add(new DispoBouton(tabBtnCoul[cpt]));
+		}		
 
 	}
 	
+	class DispoBouton extends JPanel
+	{
+		public DispoBouton(JButton btnAction)
+		{
+			this.setLayout(new BorderLayout());
+			this.add(btnAction,BorderLayout.CENTER);
+		}
+	}
 }

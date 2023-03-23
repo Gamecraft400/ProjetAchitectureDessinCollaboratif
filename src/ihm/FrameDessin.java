@@ -14,6 +14,7 @@ public class FrameDessin extends JFrame
 {
     private JPanel panelHaut;
     private JPanel paneldessin;
+    private PanelChoixCouleur panelChoixCouleur;
 
     private JButton btnCercle;
     private JButton btnRectangle;
@@ -30,6 +31,8 @@ public class FrameDessin extends JFrame
         this.setResizable(false);
         this.setBackground(new Color(217,217,217));
         this.setLayout(new BorderLayout());
+
+        this.panelChoixCouleur = new PanelChoixCouleur();
 
         //création du panel haut
         this.panelHaut = new JPanel();
@@ -64,12 +67,14 @@ public class FrameDessin extends JFrame
         //création du panel dessin
         this.paneldessin = new JPanel();
 
-
-
         this.panelHaut.add(this.btnCercle);
         this.panelHaut.add(this.btnRectangle);
         this.panelHaut.add(this.btnLigne);
         this.panelHaut.add(this.btnTexte);
+
+        
+
+        this.add(this.panelChoixCouleur,BorderLayout.SOUTH);
        
         this.add(this.panelHaut, BorderLayout.NORTH);
         this.add(this.paneldessin, BorderLayout.CENTER);
