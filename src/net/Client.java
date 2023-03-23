@@ -70,7 +70,7 @@ public class Client
         return pseudo;
     }
 
-    public static void main(String[] args) 
+    /*public static void main(String[] args) 
     {
         Client client = new Client("Pseudo");
         client.connect("localhost", 1234);
@@ -79,5 +79,5 @@ public class Client
         System.out.println(client.receiveMessage());
         
         client.disconnect();
-    }
+    }*/
 }

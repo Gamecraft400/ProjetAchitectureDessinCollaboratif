@@ -62,7 +62,7 @@ public class Serveur
 
     
 
-    public static void main(String[] args) 
+    /*public static void main(String[] args) 
     {
         Serveur server = new Serveur();
         String ip = IpRecup.getLocalIpAddress();
@@ -70,6 +70,6 @@ public class Serveur
 
         server.listenForClients();
 
-    }
+    }*/
 
 }

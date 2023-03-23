@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.net.InetAddress;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -19,6 +20,7 @@ import javax.swing.JTextField;
 import controleur.Controleur;
 import net.Serveur;
 import net.Client;
+import net.IpRecup;
 
 public class FrameAccueil extends JFrame implements ActionListener
 {
@@ -39,7 +41,7 @@ public class FrameAccueil extends JFrame implements ActionListener
     {
         this.ctrl = ctrl;
         this.setTitle("Accueil");
-        this.setSize(500, 500);
+        this.setSize(500, 350);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -115,6 +117,11 @@ public class FrameAccueil extends JFrame implements ActionListener
                         serveur.listenForClients();
                     }
                 });
+
+                System.out.println("Serveur lancé");
+
+                String ip = IpRecup.getLocalIpAddress();
+                System.out.println(ip);
             }
 
 
