@@ -1,4 +1,4 @@
-package metier;
+package net;
 
 import java.io.IOException;
 import java.net.ServerSocket;
