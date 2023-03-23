@@ -25,9 +25,9 @@ public class PanelDessin extends JPanel implements MouseListener
         this.addMouseListener(this);
     }
 
-    public void cercle()
+    public void cercle(boolean isCercle)
     {
-        this.isCercle = true;
+        this.isCercle = isCercle;
     }
 
     public void dessinerCercle() 

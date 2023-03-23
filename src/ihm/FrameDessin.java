@@ -24,6 +24,8 @@ public class FrameDessin extends JFrame implements ActionListener
     private JButton btnRectangle;
     private JButton btnLigne;
     private JButton btnTexte;
+
+    private boolean isCercle = false;
     
     public FrameDessin(Controleur ctrl)
     {
@@ -96,8 +98,9 @@ public class FrameDessin extends JFrame implements ActionListener
     {
         if(e.getSource() == this.btnCercle)
         {
-            this.paneldessin.cercle();
-            this.btnCercle.setBorderPainted(true);
+            this.isCercle = !isCercle;
+            this.paneldessin.cercle(this.isCercle);
+            this.btnCercle.setBorderPainted(this.isCercle);
         }
         else if(e.getSource() == this.btnRectangle)
         {
