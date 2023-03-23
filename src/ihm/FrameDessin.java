@@ -26,6 +26,9 @@ public class FrameDessin extends JFrame implements ActionListener
     private JButton btnTexte;
 
     private boolean isCercle = false;
+    private boolean isRectangle = false;
+    private boolean isLigne = false;
+    private boolean isTexte = false;
     
     public FrameDessin(Controleur ctrl)
     {
@@ -98,21 +101,79 @@ public class FrameDessin extends JFrame implements ActionListener
     {
         if(e.getSource() == this.btnCercle)
         {
-            this.isCercle = !isCercle;
+            this.setSelection("Cercle");
             this.paneldessin.cercle(this.isCercle);
             this.btnCercle.setBorderPainted(this.isCercle);
         }
         else if(e.getSource() == this.btnRectangle)
         {
-            this.ctrl.ajouterOutil("Rectangle", Color.BLACK);
+            this.setSelection("Rectangle");
+            this.paneldessin.rectangle(this.isRectangle);
+            this.btnRectangle.setBorderPainted(this.isRectangle);
         }
         else if(e.getSource() == this.btnLigne)
         {
-            this.ctrl.ajouterOutil("Ligne", Color.BLACK);
+            this.setSelection("Ligne");
+            this.paneldessin.ligne(isLigne);
+            this.btnLigne.setBorderPainted(this.isLigne);
         }
         else if(e.getSource() == this.btnTexte)
         {
-            this.ctrl.ajouterOutil("Texte", Color.BLACK);
+            this.setSelection("Texte");
+            this.paneldessin.texte(isTexte);
+            this.btnTexte.setBorderPainted(this.isTexte);
+        }
+    }
+
+    private void setSelection(String titre)
+    {
+        if(titre.equals("Cercle"))
+        {
+            this.btnCercle.setBorderPainted(true);
+            this.btnRectangle.setBorderPainted(false);
+            this.btnLigne.setBorderPainted(false);
+            this.btnTexte.setBorderPainted(false);
+
+            this.isCercle = !isCercle;
+            this.isRectangle = false;
+            this.isLigne = false;
+            this.isTexte = false;
+        }
+        else if(titre.equals("Rectangle"))
+        {
+            this.btnCercle.setBorderPainted(false);
+            this.btnRectangle.setBorderPainted(true);
+            this.btnLigne.setBorderPainted(false);
+            this.btnTexte.setBorderPainted(false);
+
+            this.isRectangle = !isRectangle;
+            this.isCercle = false;
+            this.isLigne = false;
+            this.isTexte = false;
+        }
+        else if(titre.equals("Ligne"))
+        {
+            this.btnCercle.setBorderPainted(false);
+            this.btnRectangle.setBorderPainted(false);
+            this.btnLigne.setBorderPainted(true);
+            this.btnTexte.setBorderPainted(false);
+
+            this.isLigne = !isLigne;
+            this.isCercle = false;
+            this.isRectangle = false;
+            this.isTexte = false;
+        }
+        else if(titre.equals("Texte"))
+        {
+            this.btnCercle.setBorderPainted(false);
+            this.btnRectangle.setBorderPainted(false);
+            this.btnLigne.setBorderPainted(false);
+            this.btnTexte.setBorderPainted(true);
+
+            this.isTexte = !isTexte;
+            this.isCercle = false;
+            this.isRectangle = false;
+            this.isLigne = false;
         }
     }
 }
