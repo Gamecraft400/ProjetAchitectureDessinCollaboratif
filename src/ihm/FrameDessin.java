@@ -70,17 +70,15 @@ public class FrameDessin extends JFrame implements ActionListener
         //création du panel dessin
         this.paneldessin = new JPanel();
 
-
-
         this.panelHaut.add(this.btnCercle);
         this.panelHaut.add(this.btnRectangle);
         this.panelHaut.add(this.btnLigne);
         this.panelHaut.add(this.btnTexte);
 
         
+        
 
         this.add(this.panelChoixCouleur,BorderLayout.SOUTH);
-       
         this.add(this.panelHaut, BorderLayout.NORTH);
         this.setVisible(true);
 
