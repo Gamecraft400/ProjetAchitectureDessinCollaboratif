@@ -3,15 +3,19 @@ package ihm;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class FrameDessin extends JFrame
+import controleur.Controleur;
+
+public class FrameDessin extends JFrame implements ActionListener
 {
+    private Controleur ctrl;
     private JPanel panelHaut;
     private JPanel paneldessin;
     private PanelChoixCouleur panelChoixCouleur;
@@ -20,11 +24,10 @@ public class FrameDessin extends JFrame
     private JButton btnRectangle;
     private JButton btnLigne;
     private JButton btnTexte;
-
-    private JButton[] tabBtnCoul;
     
-    public FrameDessin()
+    public FrameDessin(Controleur ctrl)
     {
+        this.ctrl = ctrl;
         this.setTitle("Dessin");
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,6 +70,8 @@ public class FrameDessin extends JFrame
         //création du panel dessin
         this.paneldessin = new JPanel();
 
+
+
         this.panelHaut.add(this.btnCercle);
         this.panelHaut.add(this.btnRectangle);
         this.panelHaut.add(this.btnLigne);
@@ -77,12 +82,33 @@ public class FrameDessin extends JFrame
         this.add(this.panelChoixCouleur,BorderLayout.SOUTH);
        
         this.add(this.panelHaut, BorderLayout.NORTH);
-        this.add(this.paneldessin, BorderLayout.CENTER);
         this.setVisible(true);
+
+        this.btnCercle.addActionListener(this);
+        this.btnRectangle.addActionListener(this);
+        this.btnLigne.addActionListener(this);
+        this.btnTexte.addActionListener(this);
+
     }
 
-    public static void main(String[] args)
+    @Override
+    public void actionPerformed(ActionEvent e) 
     {
-        new FrameDessin();
+        if(e.getSource() == this.btnCercle)
+        {
+            this.ctrl.ajouterOutil("Cercle", Color.BLACK);
+        }
+        else if(e.getSource() == this.btnRectangle)
+        {
+            this.ctrl.ajouterOutil("Rectangle", Color.BLACK);
+        }
+        else if(e.getSource() == this.btnLigne)
+        {
+            this.ctrl.ajouterOutil("Ligne", Color.BLACK);
+        }
+        else if(e.getSource() == this.btnTexte)
+        {
+            this.ctrl.ajouterOutil("Texte", Color.BLACK);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package metier;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,12 @@ public class Metier
     public List<Utilisateur> getUtilisateurs()
     {
         return this.alUtilisateurs;
+    }
+
+    public void ajouterOutil(String outil, Color coul) 
+    {
+        this.alOutils.add(new Outil(outil, coul));
+        System.out.println(this.alOutils);
     }
 
 }

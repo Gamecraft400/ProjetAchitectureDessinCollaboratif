@@ -1,12 +1,17 @@
 package ihm;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import controleur.Controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +20,7 @@ public class FrameAccueil extends JFrame implements ActionListener
 {
     private Controleur ctrl;
     private JPanel panelAccueil;
+    private FrameDessin frameDessin;
 
     private JLabel     lblPseudo;
     private JTextField txtPseudo;
@@ -76,9 +82,10 @@ public class FrameAccueil extends JFrame implements ActionListener
         this.add(this.panelAccueil);
         this.setVisible(true);
 
-        //Ajout des listeners
         this.btnCreer.addActionListener(this);
         this.btnRejoindre.addActionListener(this);
+
+
     }
 
     @Override
@@ -107,6 +114,7 @@ public class FrameAccueil extends JFrame implements ActionListener
             else
             {
                 System.out.println("Rejoindre");
+                this.frameDessin = new FrameDessin(this.ctrl);
             }
         }
         
