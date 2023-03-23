@@ -1,29 +1,34 @@
 package ihm;
 
 import java.awt.Color;
-import java.awt.Dialog;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
+import javax.swing.SwingUtilities;
 
 import controleur.Controleur;
-import net.Serveur;
 import net.Client;
+import net.ClientHandler;
 import net.IpRecup;
+import net.Serveur;
 
 public class FrameAccueil extends JFrame implements ActionListener
 {
     private Controleur ctrl;
+
+    private Serveur serveur;
+
     private JPanel panelAccueil;
     private FrameDessin frameDessin;
 
@@ -112,21 +117,54 @@ public class FrameAccueil extends JFrame implements ActionListener
                     @Override
                     public void run() 
                     {
-                        Serveur serveur = new Serveur();
+                        serveur = new Serveur();
                         System.out.println("Serveur lancé");
                         serveur.listenForClients();
+
                     }
+                    
                 });
 
                 serveurThread.start();
 
+                Client client = new Client(this.txtPseudo.getText());
+                this.ctrl.ajouterClient(client);
                 String ip = IpRecup.getLocalIpAddress();
                 System.out.println("IP : " + ip);
+
+                SwingUtilities.invokeLater(new Runnable() 
+                        {
+                            public void run() 
+                            {
+                                JFrame lobbyFrame = new JFrame("Lobby");
+
+                                lobbyFrame.setLocationRelativeTo(null);
+                                lobbyFrame.setSize(400, 300);
+                                lobbyFrame.setSize(400, 300);
+                                lobbyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+                                JPanel lobbyPanel = new JPanel();
+                                lobbyPanel.setLayout(new BoxLayout(lobbyPanel, BoxLayout.Y_AXIS));
+
+                                JLabel lblLobby = new JLabel("Nombre de personnes connectées : " + serveur.getAlClientsH().size());
+                                lobbyPanel.add(lblLobby);
+
+                                DefaultListModel<ClientHandler> listModel = new DefaultListModel<ClientHandler>();
+                                JList<ClientHandler> list = new JList<ClientHandler>(listModel);
+                                for (ClientHandler client : serveur.getAlClientsH())
+                                {
+                                    listModel.addElement(client);
+                                }
+                                lobbyPanel.add(list);
+
+                                lobbyFrame.add(lobbyPanel);
+
+                                // Ajouter des composants à la frame ici
+                                lobbyFrame.setVisible(true);
+                            }
+                        });
+
             }
-
-            
-
-    
         }
         else if(e.getSource() == this.btnRejoindre)
         {
@@ -140,6 +178,7 @@ public class FrameAccueil extends JFrame implements ActionListener
 
                 String pseudo = this.txtPseudo.getText();
                 Client client = new Client(pseudo);
+                this.ctrl.ajouterClient(client);
 
                 String ip = this.txtIP.getText();
                 client.connect(ip, 1234);

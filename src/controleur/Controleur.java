@@ -2,8 +2,11 @@ package controleur;
 
 import java.awt.Color;
 
+import java.util.List;
+
 import ihm.FrameAccueil;
 import metier.Metier;
+import net.Client;
 
 public class Controleur 
 {
@@ -24,6 +27,16 @@ public class Controleur
     public void ajouterOutil(String outil, Color coul) 
     {
         this.metier.ajouterOutil(outil, coul);
+    }
+
+    public void ajouterClient(Client client) 
+    {
+        this.metier.ajouterClient(client);
+    }
+
+    public List<Client> getAlClients() 
+    {
+        return this.metier.getAlClients();
     }
 
     public void setCouleur(Color color) 

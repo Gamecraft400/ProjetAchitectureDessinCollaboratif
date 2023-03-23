@@ -60,6 +60,11 @@ public class Serveur
         System.out.println("Client déconnecté : " + clientHandler.getClientSocket());
     }
 
+    public ArrayList<ClientHandler> getAlClientsH() 
+    {
+        return alClientsH;
+    }
+
     
 
     /*public static void main(String[] args) 
