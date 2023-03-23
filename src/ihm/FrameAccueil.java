@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.net.InetAddress;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -41,7 +40,7 @@ public class FrameAccueil extends JFrame implements ActionListener
     {
         this.ctrl = ctrl;
         this.setTitle("Accueil");
-        this.setSize(500, 350);
+        this.setSize(500, 500);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -114,16 +113,18 @@ public class FrameAccueil extends JFrame implements ActionListener
                     public void run() 
                     {
                         Serveur serveur = new Serveur();
+                        System.out.println("Serveur lancé");
                         serveur.listenForClients();
                     }
                 });
 
-                System.out.println("Serveur lancé");
+                serveurThread.start();
 
                 String ip = IpRecup.getLocalIpAddress();
-                System.out.println(ip);
+                System.out.println("IP : " + ip);
             }
 
+            
 
     
         }
@@ -136,6 +137,16 @@ public class FrameAccueil extends JFrame implements ActionListener
             else
             {
                 System.out.println("Rejoindre");
+
+                String pseudo = this.txtPseudo.getText();
+                Client client = new Client(pseudo);
+
+                String ip = this.txtIP.getText();
+                client.connect(ip, 1234);
+                
+                client.sendMessage("TU AS REUSSI !");
+                System.out.println(client.receiveMessage());
+
                 this.frameDessin = new FrameDessin(this.ctrl);
                 this.dispose();
             }
