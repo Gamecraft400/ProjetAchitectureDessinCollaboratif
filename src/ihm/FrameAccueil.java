@@ -121,6 +121,7 @@ public class FrameAccueil extends JFrame implements ActionListener
             {
                 System.out.println("Rejoindre");
                 this.frameDessin = new FrameDessin(this.ctrl);
+                this.dispose();
             }
         }
         
