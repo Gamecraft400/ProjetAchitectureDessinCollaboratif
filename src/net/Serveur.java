@@ -17,7 +17,7 @@ public class Serveur
         try {
 
             serverSocket = new ServerSocket(PORT);
-            System.out.println("Serveur démarré sur le port " + PORT);
+            System.out.println("Serveur demarre sur le port " + PORT);
 
         } catch (IOException e) {
             System.out.println("Erreur lors du démarrage du serveur : " + e.getMessage());
@@ -60,10 +60,16 @@ public class Serveur
         System.out.println("Client déconnecté : " + clientHandler.getClientSocket());
     }
 
+    
+
     public static void main(String[] args) 
     {
         Serveur server = new Serveur();
+        String ip = IpRecup.getLocalIpAddress();
+        System.out.println("IP : " + ip);
+
         server.listenForClients();
+
     }
 
 }

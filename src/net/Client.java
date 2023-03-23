@@ -60,9 +60,24 @@ public class Client
             in.close();
             out.close();
             socket.close();
-            
+
         } catch (IOException e) {
             System.out.println("Erreur lors de la déconnexion : " + e.getMessage());
         }
+    }
+
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public static void main(String[] args) 
+    {
+        Client client = new Client("Pseudo");
+        client.connect("localhost", 1234);
+        
+        client.sendMessage("Bonjour");
+        System.out.println(client.receiveMessage());
+        
+        client.disconnect();
     }
 }
