@@ -25,6 +25,8 @@ public class Client
         try {
 
             socket = new Socket(hostname, port);
+            System.out.println("Connexion au serveur " + hostname + " sur le port " + port);
+            
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
