@@ -25,4 +25,14 @@ public class Controleur
     {
         this.metier.ajouterOutil(outil, coul);
     }
+
+    public void setCouleur(Color color) 
+    {
+        this.metier.setCouleur(color);
+    }
+
+    public Color getCouleur() 
+    {
+        return this.metier.getCouleur();
+    }
 }

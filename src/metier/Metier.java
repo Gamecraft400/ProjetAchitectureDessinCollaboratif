@@ -10,6 +10,7 @@ public class Metier
 {
     private List<Outil> alOutils;
     private List<Client> alUtilisateurs;
+    private Color couleur;
 
     //singleton
     private static Metier instance = null;
@@ -52,6 +53,16 @@ public class Metier
     {
         this.alOutils.add(new Outil(outil, coul));
         System.out.println(this.alOutils);
+    }
+
+    public void setCouleur(Color color)
+    {
+        this.couleur = color;
+    }
+
+    public Color getCouleur()
+    {
+        return this.couleur;
     }
 
 }

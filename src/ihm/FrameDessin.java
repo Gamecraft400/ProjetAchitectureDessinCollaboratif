@@ -40,7 +40,7 @@ public class FrameDessin extends JFrame implements ActionListener
         this.setBackground(new Color(217,217,217));
         this.setLayout(new BorderLayout());
 
-        this.panelChoixCouleur = new PanelChoixCouleur();
+        this.panelChoixCouleur = new PanelChoixCouleur(this.ctrl);
 
         //création du panel haut
         this.panelHaut = new JPanel();
