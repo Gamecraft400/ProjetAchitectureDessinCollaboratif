@@ -6,25 +6,24 @@ import java.net.Socket;
 
 public class Serveur 
 {
-    private ServerSocket serverSocket;
-    private  int port;
+    private static final int PORT = 1234;
 
-    public Serveur(int port)
+    private ServerSocket serverSocket;
+
+    public Serveur()
     {
-        this.port = port;
 
         try {
             
-            this.serverSocket = new ServerSocket(this.port);
-            System.out.println("Serveur en ecoute sur le port " + this.port);
+            this.serverSocket = new ServerSocket(PORT);
+            System.out.println("Serveur en ecoute sur le port " + PORT);
 
-            while(true)
-            {
-                Socket socket = this.serverSocket.accept();
-                System.out.println("Nouvelle connexion");
-                Thread t = new Thread(new Service(socket));
-                t.start();
-            }
+        
+            Socket socket = this.serverSocket.accept();
+            System.out.println("Nouvelle connexion");
+            Thread t = new Thread(new Service(socket));
+            t.start();
+            
 
 
         } catch (IOException e ) {e.printStackTrace();}

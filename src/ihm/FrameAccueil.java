@@ -1,10 +1,15 @@
 package ihm;
 
 import java.awt.Color;
+import java.awt.Dialog;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -12,9 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controleur.Controleur;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import net.Serveur;
+import net.Client;
 
 public class FrameAccueil extends JFrame implements ActionListener
 {
@@ -29,6 +33,7 @@ public class FrameAccueil extends JFrame implements ActionListener
 
     private JButton btnCreer;
     private JButton btnRejoindre;
+
 
     public FrameAccueil(Controleur ctrl)
     {
@@ -100,6 +105,7 @@ public class FrameAccueil extends JFrame implements ActionListener
             else
             {
                 System.out.println("Creer");
+                new Serveur();
             }
 
 
@@ -120,3 +126,5 @@ public class FrameAccueil extends JFrame implements ActionListener
         
     }
 }
+
+

@@ -4,12 +4,12 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.Utilisateur;
+import net.Client;
 
 public class Metier 
 {
     private List<Outil> alOutils;
-    private List<Utilisateur> alUtilisateurs;
+    private List<Client> alUtilisateurs;
 
     //singleton
     private static Metier instance = null;
@@ -25,7 +25,7 @@ public class Metier
     private Metier()
     {
         this.alOutils = new ArrayList<Outil>();
-        this.alUtilisateurs = new ArrayList<Utilisateur>();
+        this.alUtilisateurs = new ArrayList<Client>();
     }
 
     public void ajouterOutil(Outil outil)
@@ -33,7 +33,7 @@ public class Metier
         this.alOutils.add(outil);
     }
 
-    public void ajouterUtilisateur(Utilisateur utilisateur)
+    public void ajouterUtilisateur(Client utilisateur)
     {
         this.alUtilisateurs.add(utilisateur);
     }
@@ -43,7 +43,7 @@ public class Metier
         return this.alOutils;
     }
 
-    public List<Utilisateur> getUtilisateurs()
+    public List<Client> getUtilisateurs()
     {
         return this.alUtilisateurs;
     }
