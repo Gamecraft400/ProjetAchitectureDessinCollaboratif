@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 
 public class FrameAccueil extends JFrame implements ActionListener
 {
+    private Controleur ctrl;
     private JPanel panelAccueil;
 
     private JLabel     lblPseudo;
@@ -23,8 +24,9 @@ public class FrameAccueil extends JFrame implements ActionListener
     private JButton btnCreer;
     private JButton btnRejoindre;
 
-    public FrameAccueil()
+    public FrameAccueil(Controleur ctrl)
     {
+        this.ctrl = ctrl;
         this.setTitle("Accueil");
         this.setSize(500, 500);
         this.setLocationRelativeTo(null);
@@ -77,11 +79,6 @@ public class FrameAccueil extends JFrame implements ActionListener
         //Ajout des listeners
         this.btnCreer.addActionListener(this);
         this.btnRejoindre.addActionListener(this);
-    }
-
-    public static void main(String[] args)
-    {
-        new FrameAccueil();
     }
 
     @Override
