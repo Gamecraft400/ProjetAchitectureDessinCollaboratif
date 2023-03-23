@@ -74,7 +74,11 @@ public class FrameDessin extends JFrame implements ActionListener
         this.panelHaut.add(this.btnRectangle);
         this.panelHaut.add(this.btnLigne);
         this.panelHaut.add(this.btnTexte);
-      
+
+        
+        
+
+        this.add(this.panelChoixCouleur,BorderLayout.SOUTH);
         this.add(this.panelHaut, BorderLayout.NORTH);
         this.add(this.paneldessin, BorderLayout.CENTER);
         this.add(this.panelChoixCouleur,BorderLayout.SOUTH);
