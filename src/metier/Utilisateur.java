@@ -1,8 +1,15 @@
 package metier;
 
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
 public class Utilisateur
 {
     private String  pseudo;
+    private Socket  socket;
+
     private boolean estConnecte;
     private boolean estAdmin;
 
@@ -11,6 +18,18 @@ public class Utilisateur
         this.pseudo         = pseudo;
         this.estConnecte    = estConnecte;
         this.estAdmin       = estAdmin;
+
+        try
+        {
+            this.socket = new Socket(InetAddress.getLocalHost(), 5000); 
+
+            PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
+            out.println("Bonjour je suis " + this.pseudo);  
+
+            socket.close();
+        }
+        catch(UnknownHostException e) {e.printStackTrace();}
+        catch(Exception e) {e.printStackTrace();}
     }
 
     public boolean getEstConnecte() { return this.estConnecte; }
