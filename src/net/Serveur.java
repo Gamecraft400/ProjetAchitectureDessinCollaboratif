@@ -3,32 +3,67 @@ package net;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Serveur 
 {
     private static final int PORT = 1234;
 
     private ServerSocket serverSocket;
+    private ArrayList<ClientHandler> alClientsH = new ArrayList<>();
 
-    public Serveur()
+    public Serveur() 
     {
-
         try {
-            
-            this.serverSocket = new ServerSocket(PORT);
-            System.out.println("Serveur en ecoute sur le port " + PORT);
 
-        
-            Socket socket = this.serverSocket.accept();
-            System.out.println("Nouvelle connexion");
-            Thread t = new Thread(new Service(socket));
-            t.start();
-            
+            serverSocket = new ServerSocket(PORT);
+            System.out.println("Serveur démarré sur le port " + PORT);
 
-
-        } catch (IOException e ) {e.printStackTrace();}
-
+        } catch (IOException e) {
+            System.out.println("Erreur lors du démarrage du serveur : " + e.getMessage());
+        }
     }
 
+    public void listenForClients() {
+        while (true) {
+            try {
+                // Attendre qu'un client se connecte
+                Socket clientSocket = serverSocket.accept();
+                System.out.println("Nouvelle connexion entrante : " + clientSocket);
+
+                // Créer un nouveau clientHandler pour gérer la communication avec le client
+                ClientHandler clientHandler = new ClientHandler(clientSocket, this);
+                alClientsH.add(clientHandler);
+
+                // Démarrer un thread pour gérer la communication avec le client
+                Thread clientThread = new Thread(clientHandler);
+                clientThread.start();
+
+            } catch (IOException e) {
+                System.out.println("Erreur lors de l'acceptation de la connexion : " + e.getMessage());
+            }
+        }
+    }
+
+    public synchronized void broadcast(String message) 
+    {
+        // Envoyer un message à tous les clients connectés
+        for (ClientHandler cH : alClientsH) {
+            cH.sendMessage(message);
+        }
+    }
+
+    public synchronized void removeClient(ClientHandler clientHandler) 
+    {
+        // Supprimer le clientHandler de la liste des clients connectés
+        alClientsH.remove(clientHandler);
+        System.out.println("Client déconnecté : " + clientHandler.getClientSocket());
+    }
+
+    public static void main(String[] args) 
+    {
+        Serveur server = new Serveur();
+        server.listenForClients();
+    }
 
 }

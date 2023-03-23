@@ -1,40 +1,68 @@
 package net;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
-public class Client
+public class Client 
 {
-    private static final int PORT = 1234;
+    private Socket socket;
 
-    private String  pseudo;
-    private Socket  socket;
+    private PrintWriter out;
+    private BufferedReader in;
 
-    public Client(String pseudo)
+    private String pseudo;
+    
+    public Client(String pseudo) 
     {
         this.pseudo = pseudo;
-
-        try
-        {
-            this.socket = new Socket(InetAddress.getLocalHost(), PORT);
-
-            PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
-            out.println("Bonjour je suis " + this.pseudo);  
-
-            socket.close();
-        }
-        catch(UnknownHostException e) {e.printStackTrace();}
-        catch(Exception e) {e.printStackTrace();}
     }
-
-    public String getPseudo      () { return this.pseudo;      }
-
-    public String toString()
+    
+    public boolean connect(String hostname, int port) 
     {
-        return "Utilisateur : " + this.pseudo + " sur " + this.socket;
+        try {
+
+            socket = new Socket(hostname, port);
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            return true;
+
+        } catch (IOException e) {
+            System.out.println("Erreur lors de la connexion au serveur : " + e.getMessage());
+            return false;
+        }
     }
+    
+    public void sendMessage(String message) 
+    {
+        out.println(pseudo + ": " + message);
+    }
+    
+    public String receiveMessage() 
+    {
+        try {
 
+            return in.readLine();
 
+        } catch (IOException e) {
+            System.out.println("Erreur lors de la réception d'un message : " + e.getMessage());
+            return null;
+        }
+    }
+    
+    public void disconnect() 
+    {
+        try {
+
+            in.close();
+            out.close();
+            socket.close();
+            
+        } catch (IOException e) {
+            System.out.println("Erreur lors de la déconnexion : " + e.getMessage());
+        }
+    }
 }
