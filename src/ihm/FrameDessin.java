@@ -17,7 +17,7 @@ public class FrameDessin extends JFrame implements ActionListener
 {
     private Controleur ctrl;
     private JPanel panelHaut;
-    private JPanel paneldessin;
+    private PanelDessin paneldessin;
     private PanelChoixCouleur panelChoixCouleur;
 
     private JButton btnCercle;
@@ -68,20 +68,16 @@ public class FrameDessin extends JFrame implements ActionListener
         this.btnTexte.setBackground(new Color(217,217,217));
 
         //création du panel dessin
-        this.paneldessin = new JPanel();
-
-
+        this.paneldessin = new PanelDessin(this.ctrl);
 
         this.panelHaut.add(this.btnCercle);
         this.panelHaut.add(this.btnRectangle);
         this.panelHaut.add(this.btnLigne);
         this.panelHaut.add(this.btnTexte);
-
-        
-
-        this.add(this.panelChoixCouleur,BorderLayout.SOUTH);
-       
+      
         this.add(this.panelHaut, BorderLayout.NORTH);
+        this.add(this.paneldessin, BorderLayout.CENTER);
+        this.add(this.panelChoixCouleur,BorderLayout.SOUTH);
         this.setVisible(true);
 
         this.btnCercle.addActionListener(this);
@@ -96,7 +92,8 @@ public class FrameDessin extends JFrame implements ActionListener
     {
         if(e.getSource() == this.btnCercle)
         {
-            this.ctrl.ajouterOutil("Cercle", Color.BLACK);
+            this.paneldessin.cercle();
+            this.btnCercle.setBorderPainted(true);
         }
         else if(e.getSource() == this.btnRectangle)
         {
