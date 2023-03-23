@@ -1,5 +1,7 @@
 package controleur;
 
+import java.awt.Color;
+
 import ihm.FrameAccueil;
 import metier.Metier;
 
@@ -19,7 +21,7 @@ public class Controleur
         new Controleur();
     }
 
-    public void ajouterOutil(String outil, String coul) 
+    public void ajouterOutil(String outil, Color coul) 
     {
         this.metier.ajouterOutil(outil, coul);
     }

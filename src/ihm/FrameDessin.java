@@ -85,19 +85,19 @@ public class FrameDessin extends JFrame implements ActionListener
     {
         if(e.getSource() == this.btnCercle)
         {
-            this.ctrl.ajouterOutil("Cercle", "BLACK");
+            this.ctrl.ajouterOutil("Cercle", Color.BLACK);
         }
         else if(e.getSource() == this.btnRectangle)
         {
-            this.ctrl.ajouterOutil("Rectangle", "BLACK");
+            this.ctrl.ajouterOutil("Rectangle", Color.BLACK);
         }
         else if(e.getSource() == this.btnLigne)
         {
-            this.ctrl.ajouterOutil("Ligne", "BLACK");
+            this.ctrl.ajouterOutil("Ligne", Color.BLACK);
         }
         else if(e.getSource() == this.btnTexte)
         {
-            this.ctrl.ajouterOutil("Texte", "BLACK");
+            this.ctrl.ajouterOutil("Texte", Color.BLACK);
         }
     }
 }
