@@ -1,13 +1,15 @@
 package metier;
 
+import java.awt.Color;
+
 public class Outil
 {
 	private final static String[] OUTIL_DIPONIBLE     = {"Cercle","Rectangle","Ligne","Texte","Remplir"};
-	private final static String[] COULEURS_DISPONIBLE = {"Red","Bleu","Green","Yellow","Black","White" };
+	private final static Color[] COULEURS_DISPONIBLE = {Color.RED,Color.BLUE,Color.GREEN,Color.YELLOW,Color.BLACK,Color.WHITE};
 
 	private String outil;
 	private String libelle;
-	private String couleur;
+	private Color couleur;
 
 	private int posX;
 	private int posY;
@@ -16,7 +18,7 @@ public class Outil
 	private int hauteur;
 
 
-	public static Outil creerOutil(String outil, String libelle, String couleur, int posX, int posY, int largeur, int hauteur)
+	public static Outil creerOutil(String outil, String libelle, Color couleur, int posX, int posY, int largeur, int hauteur)
 	{
 		boolean contient = false;
 		for(int cpt = 0; cpt < Outil.OUTIL_DIPONIBLE.length;cpt++)
@@ -29,12 +31,12 @@ public class Outil
 		return new Outil(outil, libelle, couleur, posX, posY, largeur, hauteur);
 	}
 
-	public static Outil creerOutil(String outil, String couleur, int posX, int posY, int largeur, int hauteur)
+	public static Outil creerOutil(String outil, Color couleur, int posX, int posY, int largeur, int hauteur)
 	{
 		return creerOutil(outil, "", couleur, posX, posY, largeur, hauteur);
 	}
 
-	private Outil(String outil, String libelle, String couleur , int posX, int posY, int largeur, int hauteur)
+	private Outil(String outil, String libelle, Color couleur , int posX, int posY, int largeur, int hauteur)
 	{
 		this.outil = outil;
 		this.libelle = libelle;
@@ -45,12 +47,12 @@ public class Outil
 		this.hauteur = hauteur;
 	}	
 
-	private Outil(String outil, String couleur, int posX, int posY, int largeur, int hauteur)
+	private Outil(String outil, Color couleur, int posX, int posY, int largeur, int hauteur)
 	{
 		this(outil, "", couleur, posX, posY, largeur, hauteur);
 	}
 
-	public boolean setCouleur(String couleur)
+	public boolean setCouleur(Color couleur)
 	{
 		for(int cpt = 0; cpt < Outil.COULEURS_DISPONIBLE.length;cpt++)
 			if(Outil.COULEURS_DISPONIBLE[cpt] == couleur)
@@ -64,7 +66,7 @@ public class Outil
 
 	public String getLibelle(){return this.libelle; }
 	public String getOutil	(){return this.outil;	}
-	public String getCouleur(){return this.couleur; }
+	public Color getCouleur(){return this.couleur; }
 
 	public int getPosX		(){return this.posX;	}
 	public int getPosY		(){return this.posY;	}

@@ -1,7 +1,8 @@
 package metier;
 
-public class Utilisateur
+public class Utilisateur 
 {
+    
     private String  pseudo;
     private boolean estConnecte;
     private boolean estAdmin;
@@ -21,11 +22,11 @@ public class Utilisateur
     {
         this.estConnecte = estConnecte;
     }
-
+	
     public String toString()
     {
         return "Utilisateur : " + this.pseudo + " est connecte : " + this.estConnecte + " est admin : " + this.estAdmin;
-    }
+}
 
 
 }
