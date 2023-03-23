@@ -18,4 +18,9 @@ public class Controleur
     {
         new Controleur();
     }
+
+    public void ajouterOutil(String outil, String coul) 
+    {
+        this.metier.ajouterOutil(outil, coul);
+    }
 }

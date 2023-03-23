@@ -45,4 +45,10 @@ public class Metier
         return this.alUtilisateurs;
     }
 
+    public void ajouterOutil(String outil, String coul) 
+    {
+        this.alOutils.add(new Outil(outil, coul));
+        System.out.println(this.alOutils);
+    }
+
 }
