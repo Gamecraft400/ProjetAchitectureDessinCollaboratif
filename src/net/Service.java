@@ -1,4 +1,4 @@
-package metier;
+package net;
 
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -24,3 +24,4 @@ public class Service implements Runnable
         } catch (Exception e) {e.printStackTrace();}        
     }
 }
+

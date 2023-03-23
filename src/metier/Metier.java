@@ -3,6 +3,8 @@ package metier;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.Utilisateur;
+
 public class Metier 
 {
     private List<Outil> alOutils;

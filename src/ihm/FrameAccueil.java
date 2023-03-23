@@ -4,10 +4,14 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class FrameAccueil extends JFrame
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class FrameAccueil extends JFrame implements ActionListener
 {
     private JPanel panelAccueil;
 
@@ -69,10 +73,45 @@ public class FrameAccueil extends JFrame
         //Ajout du panel à la frame
         this.add(this.panelAccueil);
         this.setVisible(true);
+
+        //Ajout des listeners
+        this.btnCreer.addActionListener(this);
+        this.btnRejoindre.addActionListener(this);
     }
 
     public static void main(String[] args)
     {
         new FrameAccueil();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) 
+    {
+        if(e.getSource() == this.btnCreer)
+        {
+            if (this.txtPseudo.getText().equals(""))
+            {
+                JOptionPane.showMessageDialog(this, "Veuillez saisir un pseudo", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+            else
+            {
+                System.out.println("Creer");
+            }
+
+
+    
+        }
+        else if(e.getSource() == this.btnRejoindre)
+        {
+            if (this.txtPseudo.getText().equals("") || this.txtIP.getText().equals(""))
+            {
+                JOptionPane.showMessageDialog(this, "Veuillez saisir un pseudo et une adresse IP", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+            else
+            {
+                System.out.println("Rejoindre");
+            }
+        }
+        
     }
 }
