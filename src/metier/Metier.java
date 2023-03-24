@@ -49,10 +49,9 @@ public class Metier
         return this.alUtilisateurs;
     }
 
-    public void ajouterOutil(String outil, Color coul) 
+    public void ajouterOutil(String outil, Color coul, int x, int y, int width, int height) 
     {
-        this.alOutils.add(new Outil(outil, coul));
-        System.out.println(this.alOutils);
+        this.alOutils.add(new Outil(outil, coul, x, y, width, height));
     }
 
     public void setCouleur(Color color)
@@ -63,6 +62,11 @@ public class Metier
     public Color getCouleur()
     {
         return this.couleur;
+    }
+
+    public void ajouterOutil(String outil, String texte, Color couleur2, int x, int y, int width, int height) 
+    {
+        this.alOutils.add(new Outil(outil, texte, couleur2, x, y, width, height));
     }
 
 }

@@ -2,6 +2,7 @@ package ihm;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,7 +41,7 @@ public class FrameDessin extends JFrame implements ActionListener
         this.setBackground(new Color(217,217,217));
         this.setLayout(new BorderLayout());
 
-        this.panelChoixCouleur = new PanelChoixCouleur(this.ctrl);
+        
 
         //création du panel haut
         this.panelHaut = new JPanel();
@@ -72,18 +73,20 @@ public class FrameDessin extends JFrame implements ActionListener
         this.btnTexte.setFocusPainted(false);
         this.btnTexte.setBackground(new Color(217,217,217));
 
-        //création du panel dessin
-        this.paneldessin = new PanelDessin(this.ctrl);
-
         this.panelHaut.add(this.btnCercle);
         this.panelHaut.add(this.btnRectangle);
         this.panelHaut.add(this.btnLigne);
         this.panelHaut.add(this.btnTexte);
+        
+        //création du panel dessin
+        this.paneldessin = new PanelDessin(this.ctrl);
 
+        //création du panel choix couleur
+        this.panelChoixCouleur = new PanelChoixCouleur(this.ctrl);
+        this.panelChoixCouleur.setPreferredSize(new Dimension(500, 60));
         
         
 
-        this.add(this.panelChoixCouleur,BorderLayout.SOUTH);
         this.add(this.panelHaut, BorderLayout.NORTH);
         this.add(this.paneldessin, BorderLayout.CENTER);
         this.add(this.panelChoixCouleur,BorderLayout.SOUTH);

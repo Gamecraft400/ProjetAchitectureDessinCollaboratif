@@ -67,6 +67,12 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
         this.isLigne = false;
     }
 
+    public void paint(Graphics g)
+    {
+        super.paint(g);
+        this.dessinerForme();
+    }
+
     public void dessinerForme()
     {
         Graphics g = this.getGraphics();
@@ -74,22 +80,22 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
 
         if(this.isCercle)
         {
-            this.ctrl.ajouterOutil("Cercle", this.ctrl.getCouleur());
+            this.ctrl.ajouterOutil("Cercle", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
             g.drawOval(this.x, this.y, this.width, this.height);
         }
         else if(this.isRectangle)
         {
-            this.ctrl.ajouterOutil("Rectangle", this.ctrl.getCouleur());
+            this.ctrl.ajouterOutil("Rectangle", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
             g.drawRect(this.x, this.y, this.width, this.height);
         }
         else if(this.isLigne)
         {
-            this.ctrl.ajouterOutil("Ligne", this.ctrl.getCouleur());
+            this.ctrl.ajouterOutil("Ligne", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
             g.drawLine(this.x, this.y, this.width, this.height);
         }
         else if(this.isTexte)
         {
-            this.ctrl.ajouterOutil("Texte", this.ctrl.getCouleur());
+            this.ctrl.ajouterOutil("Texte", this.texte, this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
             g.drawString(this.texte, this.x, this.y);
         }
         
