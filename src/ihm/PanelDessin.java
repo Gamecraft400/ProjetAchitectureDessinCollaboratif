@@ -1,17 +1,15 @@
 package ihm;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
 
-public class PanelDessin extends JPanel implements MouseListener, KeyListener
+public class PanelDessin extends JPanel implements MouseListener
 {
     Controleur ctrl;
     private int x;
@@ -29,9 +27,12 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
     {
         this.ctrl = ctrl;
         this.addMouseListener(this);
-        this.addKeyListener(this);
     }
 
+    /**
+     * Le bouton selectionné est un cercle
+     * @param isCercle true si le bouton est un cercle
+     */
     public void cercle(boolean isCercle)
     {
         this.isCercle = isCercle;
@@ -41,6 +42,10 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
         this.texte = "";
     }
 
+    /**
+     * Le bouton selectionné est un rectangle
+     * @param isRectangle true si le bouton est un rectangle
+     */
     public void rectangle(boolean isRectangle)
     {
         this.isRectangle = isRectangle;
@@ -50,6 +55,10 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
         this.texte = "";
     }
 
+    /**
+     * Le bouton selectionné est une ligne
+     * @param isLigne true si le bouton est une ligne
+     */
     public void ligne(boolean isLigne)
     {
         this.isLigne = isLigne;
@@ -59,6 +68,10 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
         this.texte = "";
     }
 
+    /**
+     * Le bouton selectionné est un texte
+     * @param isTexte true si le bouton est un texte
+     */
     public void texte(boolean isTexte)
     {
         this.isTexte = isTexte;
@@ -67,79 +80,69 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
         this.isLigne = false;
     }
 
-    public void dessinerCercle() 
+    public void paint(Graphics g)
     {
-        this.ctrl.ajouterOutil("Cercle", this.ctrl.getCouleur());
-        Graphics g = this.getGraphics();
-        g.setColor(this.ctrl.getCouleur());
-        g.drawOval(this.x, this.y, this.width, this.height);
-        
+        super.paint(g);
+        this.dessinerForme();
     }
 
-    public void dessinerRectangle() 
+    /**
+     * Dessine les formes
+     */
+    public void dessinerForme()
     {
-        this.ctrl.ajouterOutil("Rectangle", this.ctrl.getCouleur());
         Graphics g = this.getGraphics();
         g.setColor(this.ctrl.getCouleur());
-        g.drawRect(this.x, this.y, this.width, this.height);
-    }
 
-    public void dessinerLigne() 
-    {
-        this.ctrl.ajouterOutil("Ligne", this.ctrl.getCouleur());
-        Graphics g = this.getGraphics();
-        g.setColor(this.ctrl.getCouleur());
-        g.drawLine(this.x, this.y, this.width, this.height);
+        if(this.isCercle)
+        {
+            this.ctrl.ajouterOutil("Cercle", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
+            g.drawOval(this.x, this.y, this.width, this.height);
+        }
+        else if(this.isRectangle)
+        {
+            this.ctrl.ajouterOutil("Rectangle", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
+            g.drawRect(this.x, this.y, this.width, this.height);
+        }
+        else if(this.isLigne)
+        {
+            this.ctrl.ajouterOutil("Ligne", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
+            g.drawLine(this.x, this.y, this.width, this.height);
+        }
+        else if(this.isTexte)
+        {
+            this.ctrl.ajouterOutil("Texte", this.texte, this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
+            g.drawString(this.texte, this.x, this.y);
+        }
     }
-
-    public void dessinerTexte() 
-    {
-        this.ctrl.ajouterOutil("Texte", this.ctrl.getCouleur());
-        Graphics g = this.getGraphics();
-        g.setColor(this.ctrl.getCouleur());
-        g.drawString(this.texte, this.x, this.y);
-    }
-
+    
     @Override
-    public void mouseClicked(MouseEvent e) 
-    {
-    }
-
-    @Override
+    /**
+     * Récupère les coordonnées de la souris lorsqu'on reste appuyé
+     */
     public void mousePressed(MouseEvent e) 
     {
-        if(this.isCercle)
+        this.x = e.getX();
+        this.y = e.getY();
+        this.width = 0;
+        this.height = 0;
+
+        if(isTexte)
         {
-            this.x = e.getX();
-            this.y = e.getY();
-            this.width = 0;
-            this.height = 0;
-        }
-        else if(isRectangle)
-        {
-            this.x = e.getX();
-            this.y = e.getY();
-            this.width = 0;
-            this.height = 0;
-        }
-        else if(isLigne)
-        {
-            this.x = e.getX();
-            this.y = e.getY();
-            this.width = 0;
-            this.height = 0;
-        }
-        else if(isTexte)
-        {
-            this.x = e.getX();
-            this.y = e.getY();
+            String prompt = "Please add text to display";
+            String input = JOptionPane.showInputDialog(this, prompt);
+            this.texte = input;
+            this.dessinerForme();
         }
     }
 
     @Override
+    /**
+     * Récupère les coordonnées de la souris lorsqu'on relache le clic pour dessiner la forme
+     */
     public void mouseReleased(MouseEvent e) 
     {
-        if(this.isCercle)
+        if(this.isCercle || isRectangle)
         {
             if(this.x < e.getX() && this.y < e.getY())
             {
@@ -165,79 +168,24 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
                 this.height = this.y - e.getY();
                 this.y = e.getY();
             }
-            this.dessinerCercle();
-        }
-        else if(isRectangle)
-        {
-            if(this.x < e.getX() && this.y < e.getY())
-            {
-                this.width = e.getX() - this.x;
-                this.height = e.getY() - this.y;
-            }
-            else if (this.x > e.getX() && this.y > e.getY())
-            {
-                this.width = this.x - e.getX();
-                this.height = this.y - e.getY();
-                this.x = e.getX();
-                this.y = e.getY();
-            }
-            else if (this.x > e.getX() && this.y < e.getY())
-            {
-                this.width = this.x - e.getX();
-                this.height = e.getY() - this.y;
-                this.x = e.getX();
-            }
-            else if (this.x < e.getX() && this.y > e.getY())
-            {
-                this.width = e.getX() - this.x;
-                this.height = this.y - e.getY();
-                this.y = e.getY();
-            }
-            this.dessinerRectangle();
         }
         else if(isLigne)
         {
             this.width = e.getX();
             this.height = e.getY();
-            this.dessinerLigne();
         }
+        this.dessinerForme();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-       
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) 
-    {
-        if(isTexte)
-        {
-            if(e.getKeyChar() == KeyEvent.VK_ENTER)
-            {
-                this.dessinerTexte();
-                System.out.println(this.texte);
-            }
-            else
-            {
-                this.texte += e.getKeyChar();
-                System.out.println(e.getKeyChar());
-                this.dessinerTexte();
-            }
-        }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
+    public void mouseExited(MouseEvent e) {     
     }
 }

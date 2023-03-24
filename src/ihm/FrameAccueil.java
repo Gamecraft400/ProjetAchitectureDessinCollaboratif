@@ -22,8 +22,9 @@ public class FrameAccueil extends JFrame implements ActionListener
 
     private Serveur serveur;
 
-    private JPanel panelAccueil;
     private FrameDessin frameDessin;
+
+    private JPanel panelAccueil;
 
     private JLabel     lblPseudo;
     private JTextField txtPseudo;
@@ -124,10 +125,8 @@ public class FrameAccueil extends JFrame implements ActionListener
                 this.ctrl.ajouterClient(client);
                 String ip = IpRecup.getLocalIpAddress();
                 System.out.println("IP : " + ip);
-
-                this.frameDessin = new FrameDessin(this.ctrl);
                 this.dispose();
-
+            
             }
         }
         else if(e.getSource() == this.btnRejoindre)

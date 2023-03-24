@@ -24,9 +24,9 @@ public class Controleur
         new Controleur();
     }
 
-    public void ajouterOutil(String outil, Color coul) 
+    public void ajouterOutil(String outil, Color coul, int x, int y, int width, int height) 
     {
-        this.metier.ajouterOutil(outil, coul);
+        this.metier.ajouterOutil(outil, coul, x, y, width, height);
     }
 
     public void ajouterClient(Client client) 
@@ -47,5 +47,10 @@ public class Controleur
     public Color getCouleur() 
     {
         return this.metier.getCouleur();
+    }
+
+    public void ajouterOutil(String string, String texte, Color couleur, int x, int y, int width, int height) 
+    {
+        this.metier.ajouterOutil(string, texte, couleur, x, y, width, height);
     }
 }

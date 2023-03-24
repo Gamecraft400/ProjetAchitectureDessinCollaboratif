@@ -17,16 +17,20 @@ public class Outil
 	private int largeur;
 	private int hauteur;
 
-	public Outil(String outil, String libelle, Color couleur)
+	public Outil(String outil, String libelle, Color couleur, int posX, int posY, int largeur, int hauteur)
 	{
 		this.outil = outil;
 		this.libelle = libelle;
 		this.couleur = couleur;
+		this.posX = posX;
+		this.posY = posY;
+		this.largeur = largeur;
+		this.hauteur = hauteur;
 	}	
 
-	public Outil(String outil, Color couleur)
+	public Outil(String outil, Color couleur, int posX, int posY, int largeur, int hauteur)
 	{
-		this(outil, "", couleur);
+		this(outil, "", couleur, posX, posY, largeur, hauteur);
 	}
 
 	public boolean setCouleur(Color couleur)
