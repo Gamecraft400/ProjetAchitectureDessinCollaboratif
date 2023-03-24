@@ -25,11 +25,13 @@ public class FrameDessin extends JFrame implements ActionListener
     private JButton btnRectangle;
     private JButton btnLigne;
     private JButton btnTexte;
+    private JButton btnFill;
 
     private boolean isCercle = false;
     private boolean isRectangle = false;
     private boolean isLigne = false;
     private boolean isTexte = false;
+    private boolean isFill = false;
     
     public FrameDessin(Controleur ctrl)
     {
@@ -42,11 +44,10 @@ public class FrameDessin extends JFrame implements ActionListener
         this.setLayout(new BorderLayout());
 
         
-
         //création du panel haut
         this.panelHaut = new JPanel();
         this.panelHaut.setBackground(new Color(217,217,217));
-        this.panelHaut.setLayout(new GridLayout(1,4));
+        this.panelHaut.setLayout(new GridLayout(1,5));
 
         //création des composants du panel haut
         this.btnCercle = new JButton();
@@ -67,25 +68,29 @@ public class FrameDessin extends JFrame implements ActionListener
         this.btnLigne.setFocusPainted(false);
         this.btnLigne.setBackground(new Color(217,217,217));
 
-        this.btnTexte = new JButton();
-        this.btnTexte.setIcon(new ImageIcon("./donnees/texte.PNG"));
+        this.btnTexte = new JButton("Texte");
         this.btnTexte.setBorderPainted(false);
         this.btnTexte.setFocusPainted(false);
         this.btnTexte.setBackground(new Color(217,217,217));
+
+        this.btnFill = new JButton("Remplir");
+        this.btnFill.setBorderPainted(false);
+        this.btnFill.setFocusPainted(false);
+        this.btnFill.setBackground(new Color(217,217,217));
 
         this.panelHaut.add(this.btnCercle);
         this.panelHaut.add(this.btnRectangle);
         this.panelHaut.add(this.btnLigne);
         this.panelHaut.add(this.btnTexte);
+        this.panelHaut.add(this.btnFill);
         
         //création du panel dessin
         this.paneldessin = new PanelDessin(this.ctrl);
 
         //création du panel choix couleur
         this.panelChoixCouleur = new PanelChoixCouleur(this.ctrl);
-        this.panelChoixCouleur.setPreferredSize(new Dimension(500, 60));
+        this.panelChoixCouleur.setPreferredSize(new Dimension(0, 100));
         
-        this.add(this.panelChoixCouleur,BorderLayout.SOUTH);
         this.add(this.panelHaut, BorderLayout.NORTH);
         this.add(this.paneldessin, BorderLayout.CENTER);
         this.add(this.panelChoixCouleur,BorderLayout.SOUTH);
@@ -95,6 +100,7 @@ public class FrameDessin extends JFrame implements ActionListener
         this.btnRectangle.addActionListener(this);
         this.btnLigne.addActionListener(this);
         this.btnTexte.addActionListener(this);
+        this.btnFill.addActionListener(this);
 
     }
 
@@ -124,6 +130,12 @@ public class FrameDessin extends JFrame implements ActionListener
             this.setSelection("Texte");
             this.paneldessin.texte(isTexte);
             this.btnTexte.setBorderPainted(this.isTexte);
+        }
+        else if(e.getSource() == this.btnFill)
+        {
+            this.isFill = !isFill;
+            this.paneldessin.remplir(isFill);
+            this.btnFill.setBorderPainted(this.isFill);
         }
     }
 

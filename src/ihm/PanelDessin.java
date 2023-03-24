@@ -22,6 +22,7 @@ public class PanelDessin extends JPanel implements MouseListener
     private boolean isRectangle = false;
     private boolean isLigne = false;
     private boolean isTexte = false;
+    private boolean isFill = false;
 
     public PanelDessin(Controleur ctrl)
     {
@@ -97,12 +98,26 @@ public class PanelDessin extends JPanel implements MouseListener
         if(this.isCercle)
         {
             this.ctrl.ajouterOutil("Cercle", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
-            g.drawOval(this.x, this.y, this.width, this.height);
+            if(isFill)
+            {
+                g.fillOval(this.x, this.y, this.width, this.height);
+            }
+            else
+            {
+                g.drawOval(this.x, this.y, this.width, this.height);
+            }
         }
         else if(this.isRectangle)
         {
             this.ctrl.ajouterOutil("Rectangle", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
-            g.drawRect(this.x, this.y, this.width, this.height);
+            if(isFill)
+            {
+                g.fillRect(this.x, this.y, this.width, this.height);
+            }
+            else
+            {
+                g.drawRect(this.x, this.y, this.width, this.height);
+            }
         }
         else if(this.isLigne)
         {
@@ -187,5 +202,10 @@ public class PanelDessin extends JPanel implements MouseListener
 
     @Override
     public void mouseExited(MouseEvent e) {     
+    }
+
+    public void remplir(boolean isFill) 
+    {
+        this.isFill = isFill;
     }
 }
