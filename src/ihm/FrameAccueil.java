@@ -141,7 +141,6 @@ public class FrameAccueil extends JFrame implements ActionListener
 
                 String pseudo = this.txtPseudo.getText();
                 Client client = new Client(pseudo);
-                this.ctrl.ajouterClient(client);
 
                 String ip = this.txtIP.getText();
                 client.connect(ip, 1234);

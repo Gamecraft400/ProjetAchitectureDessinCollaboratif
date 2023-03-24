@@ -10,14 +10,12 @@ public class ClientHandler implements Runnable
 {
 
     private Socket clientSocket;
-    private Serveur server;
     private PrintWriter out;
     private BufferedReader in;
 
-    public ClientHandler(Socket clientSocket, Serveur server) 
+    public ClientHandler(Socket clientSocket) 
     {
         this.clientSocket = clientSocket;
-        this.server = server;
 
         try {
 
@@ -36,15 +34,15 @@ public class ClientHandler implements Runnable
 
             String inputLine;
 
-            while ((inputLine = in.readLine()) != null) 
+            // Attendre que le client envoie un message
+            while ((inputLine = in.readLine()) != null)
             {
-                // Lire les messages envoyés par le client
-                System.out.println("Message reçu de " + clientSocket + " : " + inputLine);
-                // Envoyer le message à tous les autres clients connectés
+                inputLine = in.readLine();
+                // Envoyer le message à tous les clients connectés
                 server.broadcast(inputLine);
             }
+
             // Le client s'est déconnecté
-            server.removeClient(this);
             in.close();
             out.close();
             clientSocket.close();

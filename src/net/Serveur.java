@@ -24,7 +24,8 @@ public class Serveur
         }
     }
 
-    public void listenForClients() {
+    public void listenForClients() 
+    {
         while (true) {
             try {
                 // Attendre qu'un client se connecte
@@ -32,7 +33,7 @@ public class Serveur
                 System.out.println("Nouvelle connexion entrante : " + clientSocket);
 
                 // Créer un nouveau clientHandler pour gérer la communication avec le client
-                ClientHandler clientHandler = new ClientHandler(clientSocket, this);
+                ClientHandler clientHandler = new ClientHandler(clientSocket);
                 alClientsH.add(clientHandler);
 
                 // Démarrer un thread pour gérer la communication avec le client
@@ -48,7 +49,8 @@ public class Serveur
     public synchronized void broadcast(String message) 
     {
         // Envoyer un message à tous les clients connectés
-        for (ClientHandler cH : alClientsH) {
+        for (ClientHandler cH : alClientsH) 
+        {   
             cH.sendMessage(message);
         }
     }
@@ -63,6 +65,12 @@ public class Serveur
     public ArrayList<ClientHandler> getAlClientsH() 
     {
         return alClientsH;
+    }
+
+    public static void main(String[] args) 
+    {
+        Serveur server = new Serveur();
+        server.listenForClients();
     }
 
 }
