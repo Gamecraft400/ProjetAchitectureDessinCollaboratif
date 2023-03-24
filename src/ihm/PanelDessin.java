@@ -1,17 +1,17 @@
 package ihm;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import controleur.Controleur;
 
-public class PanelDessin extends JPanel implements MouseListener, KeyListener
+public class PanelDessin extends JPanel implements MouseListener
 {
     Controleur ctrl;
     private int x;
@@ -29,7 +29,6 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
     {
         this.ctrl = ctrl;
         this.addMouseListener(this);
-        this.addKeyListener(this);
     }
 
     public void cercle(boolean isCercle)
@@ -97,6 +96,7 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
         {
             this.ctrl.ajouterOutil("Texte", this.texte, this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
             g.drawString(this.texte, this.x, this.y);
+            System.out.println(this.texte);
         }
         
     }
@@ -104,6 +104,11 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
     @Override
     public void mouseClicked(MouseEvent e) 
     {
+        if(isTexte)
+        {
+            this.x = e.getX();
+            this.y = e.getY();
+        }
     }
 
     @Override
@@ -117,9 +122,23 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
 
         if(isTexte)
         {
-            this.x = e.getX();
-            this.y = e.getY();
+            String prompt = "Please add text to display";
+            String input = JOptionPane.showInputDialog(this, prompt);
+            this.texte = input;
+            this.dessinerForme();
         }
+
+        
+    }
+
+    protected void convertToLabel(JTextField component) 
+    {
+        JLabel label = new JLabel(component.getText());
+        label.setSize(label.getPreferredSize());
+        label.setLocation(component.getLocation());
+        remove(component);
+        add(label);
+        repaint();
     }
 
     @Override
@@ -169,33 +188,5 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
     @Override
     public void mouseExited(MouseEvent e) {
         
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) 
-    {
-        if(isTexte)
-        {
-            if(e.getKeyChar() == KeyEvent.VK_ENTER)
-            {
-                this.dessinerForme();
-                System.out.println(this.texte);
-            }
-            else
-            {
-                this.texte += e.getKeyChar();
-                System.out.println(e.getKeyChar());
-                this.dessinerForme();
-            }
-        }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
     }
 }
