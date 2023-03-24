@@ -163,17 +163,14 @@ public class PanelDessin extends JPanel implements MouseListener
             this.width = e.getX();
             this.height = e.getY();
         }
-
         this.dessinerForme();
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-       
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
-        
+    public void mouseExited(MouseEvent e) {     
     }
 }
