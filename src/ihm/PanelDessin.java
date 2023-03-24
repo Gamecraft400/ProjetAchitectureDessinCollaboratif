@@ -29,6 +29,10 @@ public class PanelDessin extends JPanel implements MouseListener
         this.addMouseListener(this);
     }
 
+    /**
+     * Le bouton selectionné est un cercle
+     * @param isCercle true si le bouton est un cercle
+     */
     public void cercle(boolean isCercle)
     {
         this.isCercle = isCercle;
@@ -38,6 +42,10 @@ public class PanelDessin extends JPanel implements MouseListener
         this.texte = "";
     }
 
+    /**
+     * Le bouton selectionné est un rectangle
+     * @param isRectangle true si le bouton est un rectangle
+     */
     public void rectangle(boolean isRectangle)
     {
         this.isRectangle = isRectangle;
@@ -47,6 +55,10 @@ public class PanelDessin extends JPanel implements MouseListener
         this.texte = "";
     }
 
+    /**
+     * Le bouton selectionné est une ligne
+     * @param isLigne true si le bouton est une ligne
+     */
     public void ligne(boolean isLigne)
     {
         this.isLigne = isLigne;
@@ -56,6 +68,10 @@ public class PanelDessin extends JPanel implements MouseListener
         this.texte = "";
     }
 
+    /**
+     * Le bouton selectionné est un texte
+     * @param isTexte true si le bouton est un texte
+     */
     public void texte(boolean isTexte)
     {
         this.isTexte = isTexte;
@@ -70,6 +86,9 @@ public class PanelDessin extends JPanel implements MouseListener
         this.dessinerForme();
     }
 
+    /**
+     * Dessine les formes
+     */
     public void dessinerForme()
     {
         Graphics g = this.getGraphics();
@@ -96,8 +115,11 @@ public class PanelDessin extends JPanel implements MouseListener
             g.drawString(this.texte, this.x, this.y);
         }
     }
-
+    
     @Override
+    /**
+     * Récupère les coordonnées de la souris lorsqu'on reste appuyé
+     */
     public void mousePressed(MouseEvent e) 
     {
         this.x = e.getX();
@@ -115,6 +137,9 @@ public class PanelDessin extends JPanel implements MouseListener
     }
 
     @Override
+    /**
+     * Récupère les coordonnées de la souris lorsqu'on relache le clic pour dessiner la forme
+     */
     public void mouseReleased(MouseEvent e) 
     {
         if(this.isCercle || isRectangle)
