@@ -169,11 +169,9 @@ public class PanelDessin extends JPanel implements MouseListener
 
     @Override
     public void mouseEntered(MouseEvent e) {
-       
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
-        
+    public void mouseExited(MouseEvent e) {     
     }
 }
