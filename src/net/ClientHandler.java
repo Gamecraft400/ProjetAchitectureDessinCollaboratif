@@ -41,14 +41,11 @@ public class ClientHandler implements Runnable
     {
         try {
 
-            byte[] inputObject;
-            
-            while(inputObject = in.readObject() != null)
+            //Attendre qu'un client modifie le panelDessin
+            while (true) 
             {
-                // Réception du panelDessin
-                panelDessin = (PanelDessin) in.readObject();
-
-                // Envoi du panelDessin à tous les clients
+                // Récupérer le panelDessin envoyé par le client
+                PanelDessin panelDessin = (PanelDessin) in.readObject();
                 server.sendPanelDessin(panelDessin);
             }
             
