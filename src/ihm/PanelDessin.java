@@ -4,10 +4,8 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import controleur.Controleur;
 
@@ -96,7 +94,6 @@ public class PanelDessin extends JPanel implements MouseListener
         {
             this.ctrl.ajouterOutil("Texte", this.texte, this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
             g.drawString(this.texte, this.x, this.y);
-            System.out.println(this.texte);
         }
         
     }
@@ -129,16 +126,6 @@ public class PanelDessin extends JPanel implements MouseListener
         }
 
         
-    }
-
-    protected void convertToLabel(JTextField component) 
-    {
-        JLabel label = new JLabel(component.getText());
-        label.setSize(label.getPreferredSize());
-        label.setLocation(component.getLocation());
-        remove(component);
-        add(label);
-        repaint();
     }
 
     @Override
