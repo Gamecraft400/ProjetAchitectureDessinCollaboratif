@@ -81,6 +81,15 @@ public class PanelDessin extends JPanel implements MouseListener
         this.isLigne = false;
     }
 
+    /**
+     * La forme est remplie 
+     * @param isFill true si la forme edoit être remplie
+     */
+    public void remplir(boolean isFill) 
+    {
+        this.isFill = isFill;
+    }
+
     public void paint(Graphics g)
     {
         super.paint(g);
@@ -202,10 +211,5 @@ public class PanelDessin extends JPanel implements MouseListener
 
     @Override
     public void mouseExited(MouseEvent e) {     
-    }
-
-    public void remplir(boolean isFill) 
-    {
-        this.isFill = isFill;
     }
 }
