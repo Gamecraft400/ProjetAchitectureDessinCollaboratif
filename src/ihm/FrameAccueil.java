@@ -148,7 +148,7 @@ public class FrameAccueil extends JFrame implements ActionListener
                 client.sendMessage("TU AS REUSSI !");
                 System.out.println(client.receiveMessage());
 
-                client.setFrameDessin(serveur.getInstance(ctrl));
+                client.setFrameDessin(FrameDessin.getInstance(ctrl));
                 this.dispose();
             }
         }

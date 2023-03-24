@@ -95,23 +95,11 @@ public class PanelDessin extends JPanel implements MouseListener
             this.ctrl.ajouterOutil("Texte", this.texte, this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
             g.drawString(this.texte, this.x, this.y);
         }
-        
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) 
-    {
-        if(isTexte)
-        {
-            this.x = e.getX();
-            this.y = e.getY();
-        }
     }
 
     @Override
     public void mousePressed(MouseEvent e) 
     {
-        
         this.x = e.getX();
         this.y = e.getY();
         this.width = 0;
@@ -124,8 +112,6 @@ public class PanelDessin extends JPanel implements MouseListener
             this.texte = input;
             this.dessinerForme();
         }
-
-        
     }
 
     @Override
@@ -164,6 +150,10 @@ public class PanelDessin extends JPanel implements MouseListener
             this.height = e.getY();
         }
         this.dessinerForme();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
     }
 
     @Override
