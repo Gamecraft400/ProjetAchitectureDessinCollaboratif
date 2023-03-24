@@ -5,12 +5,20 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import ihm.FrameDessin;
+import ihm.PanelDessin;
+
+import controleur.Controleur;
+
 public class Serveur 
 {
     private static final int PORT = 1234;
 
     private ServerSocket serverSocket;
     private ArrayList<ClientHandler> alClientsH = new ArrayList<>();
+
+    private Controleur controleur;
+    private FrameDessin frameDessin;
 
     public Serveur() 
     {
@@ -50,6 +58,14 @@ public class Serveur
         // Envoyer un message à tous les clients connectés
         for (ClientHandler cH : alClientsH) {
             cH.sendMessage(message);
+        }
+    }
+
+    public synchronized void sendPanelDessin(PanelDessin panelDessin) 
+    {
+        // Envoyer un message à tous les clients connectés
+        for (ClientHandler cH : alClientsH) {
+            cH.sendPanelDessin(panelDessin);
         }
     }
 

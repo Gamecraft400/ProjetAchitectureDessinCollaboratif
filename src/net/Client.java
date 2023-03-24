@@ -1,10 +1,15 @@
 package net;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInput;
 import java.io.PrintWriter;
 import java.net.Socket;
+
+import ihm.FrameDessin;
+import ihm.PanelDessin;
 
 public class Client 
 {
@@ -14,6 +19,8 @@ public class Client
     private BufferedReader in;
 
     private String pseudo;
+
+    private FrameDessin frameDessin;
     
     public Client(String pseudo) 
     {
@@ -50,6 +57,24 @@ public class Client
         } catch (IOException e) {
             System.out.println("Erreur lors de la réception d'un message : " + e.getMessage());
             return null;
+        }
+    }
+
+    public void receivePanelDessin(byte[] bytes) 
+    {
+        try {
+
+            ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+            ObjectInput in = new java.io.ObjectInputStream(bis);
+            PanelDessin panelDessin = (PanelDessin) in.readObject();
+
+            bis.close();
+            in.close();
+            
+            frameDessin.setPanelDessin(panelDessin);
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
     
