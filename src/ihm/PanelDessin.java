@@ -163,7 +163,6 @@ public class PanelDessin extends JPanel implements MouseListener
             this.width = e.getX();
             this.height = e.getY();
         }
-
         this.dessinerForme();
     }
 
