@@ -29,6 +29,7 @@ public class PanelDessin extends JPanel implements MouseListener
     private boolean isRectangle = false;
     private boolean isLigne = false;
     private boolean isTexte = false;
+    private boolean isFill = false;
 
     public PanelDessin(Controleur ctrl, FrameDessin frameDessin)
     {
@@ -98,33 +99,37 @@ public class PanelDessin extends JPanel implements MouseListener
 
         if(!this.outils.isEmpty())
         {
-            for(Outil outil : this.outils)
+            this.ctrl.ajouterOutil("Cercle", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
+            if(isFill)
             {
-                g.setColor(outil.getCouleur());
-                
-                if(outil.getOutil().equals("Cercle"))
-                {
-                    g.setColor(outil.getCouleur());
-                    g.drawOval(outil.getPosX(), outil.getPosY(), outil.getLargeur(), outil.getHauteur());
-                }
-                else if(outil.getOutil().equals("Rectangle"))
-                {
-                    g.setColor(outil.getCouleur());
-                    g.drawRect(outil.getPosX(), outil.getPosY(), outil.getLargeur(), outil.getHauteur());
-                }
-                else if(outil.getOutil().equals("Ligne"))
-                {
-                    g.setColor(outil.getCouleur());
-                    g.drawLine(outil.getPosX(), outil.getPosY(), outil.getLargeur(), outil.getHauteur());
-                }
-                else if(outil.getOutil().equals("Texte"))
-                {
-                    g.setColor(outil.getCouleur());
-                    g.drawString(outil.getLibelle(), outil.getPosX(), outil.getPosY());
-                }
-
-                this.ctrl.envoyerOutil(outil.toString());
+                g.fillOval(this.x, this.y, this.width, this.height);
             }
+            else
+            {
+                g.drawOval(this.x, this.y, this.width, this.height);
+            }
+        }
+        else if(this.isRectangle)
+        {
+            this.ctrl.ajouterOutil("Rectangle", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
+            if(isFill)
+            {
+                g.fillRect(this.x, this.y, this.width, this.height);
+            }
+            else
+            {
+                g.drawRect(this.x, this.y, this.width, this.height);
+            }
+        }
+        else if(this.isLigne)
+        {
+            this.ctrl.ajouterOutil("Ligne", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
+            g.drawLine(this.x, this.y, this.width, this.height);
+        }
+        else if(this.isTexte)
+        {
+            this.ctrl.ajouterOutil("Texte", this.texte, this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
+            g.drawString(this.texte, this.x, this.y);
         }
     }
     
@@ -212,9 +217,8 @@ public class PanelDessin extends JPanel implements MouseListener
     public void mouseExited(MouseEvent e) {     
     }
 
-    public void ajouterOutil(Outil outil) 
+    public void remplir(boolean isFill) 
     {
-        this.outils.add(outil);
-        this.repaint();
+        this.isFill = isFill;
     }
 }
