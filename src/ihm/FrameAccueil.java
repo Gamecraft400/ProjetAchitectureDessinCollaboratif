@@ -125,6 +125,7 @@ public class FrameAccueil extends JFrame implements ActionListener
                 this.ctrl.ajouterClient(client);
                 String ip = IpRecup.getLocalIpAddress();
                 System.out.println("IP : " + ip);
+                new FrameDessin(this.ctrl);
                 this.dispose();
             
             }
