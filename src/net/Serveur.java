@@ -81,6 +81,11 @@ public class Serveur
         return alClientsH;
     }
 
+    public void setFrameDessin(FrameDessin frameDessin) 
+    {
+        this.frameDessin = frameDessin;
+    }
+
     
 
     /*public static void main(String[] args) 

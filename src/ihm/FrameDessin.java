@@ -43,7 +43,7 @@ public class FrameDessin extends JFrame implements ActionListener
     private boolean isLigne = false;
     private boolean isTexte = false;
     
-    public FrameDessin(Controleur ctrl)
+    private FrameDessin(Controleur ctrl)
     {
         this.ctrl = ctrl;
         this.setTitle("Dessin");

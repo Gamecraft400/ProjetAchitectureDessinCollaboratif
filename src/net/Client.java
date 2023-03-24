@@ -97,6 +97,10 @@ public class Client
         return pseudo;
     }
 
+    public void setFrameDessin(FrameDessin frameDessin) {
+        this.frameDessin = frameDessin;
+    }
+
     /*public static void main(String[] args) 
     {
         Client client = new Client("Pseudo");
