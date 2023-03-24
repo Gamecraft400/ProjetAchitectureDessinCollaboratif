@@ -67,37 +67,32 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
         this.isLigne = false;
     }
 
-    public void dessinerCercle() 
+    public void dessinerForme()
     {
-        this.ctrl.ajouterOutil("Cercle", this.ctrl.getCouleur());
         Graphics g = this.getGraphics();
         g.setColor(this.ctrl.getCouleur());
-        g.drawOval(this.x, this.y, this.width, this.height);
+
+        if(this.isCercle)
+        {
+            this.ctrl.ajouterOutil("Cercle", this.ctrl.getCouleur());
+            g.drawOval(this.x, this.y, this.width, this.height);
+        }
+        else if(this.isRectangle)
+        {
+            this.ctrl.ajouterOutil("Rectangle", this.ctrl.getCouleur());
+            g.drawRect(this.x, this.y, this.width, this.height);
+        }
+        else if(this.isLigne)
+        {
+            this.ctrl.ajouterOutil("Ligne", this.ctrl.getCouleur());
+            g.drawLine(this.x, this.y, this.width, this.height);
+        }
+        else if(this.isTexte)
+        {
+            this.ctrl.ajouterOutil("Texte", this.ctrl.getCouleur());
+            g.drawString(this.texte, this.x, this.y);
+        }
         
-    }
-
-    public void dessinerRectangle() 
-    {
-        this.ctrl.ajouterOutil("Rectangle", this.ctrl.getCouleur());
-        Graphics g = this.getGraphics();
-        g.setColor(this.ctrl.getCouleur());
-        g.drawRect(this.x, this.y, this.width, this.height);
-    }
-
-    public void dessinerLigne() 
-    {
-        this.ctrl.ajouterOutil("Ligne", this.ctrl.getCouleur());
-        Graphics g = this.getGraphics();
-        g.setColor(this.ctrl.getCouleur());
-        g.drawLine(this.x, this.y, this.width, this.height);
-    }
-
-    public void dessinerTexte() 
-    {
-        this.ctrl.ajouterOutil("Texte", this.ctrl.getCouleur());
-        Graphics g = this.getGraphics();
-        g.setColor(this.ctrl.getCouleur());
-        g.drawString(this.texte, this.x, this.y);
     }
 
     @Override
@@ -108,28 +103,13 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
     @Override
     public void mousePressed(MouseEvent e) 
     {
-        if(this.isCercle)
-        {
-            this.x = e.getX();
-            this.y = e.getY();
-            this.width = 0;
-            this.height = 0;
-        }
-        else if(isRectangle)
-        {
-            this.x = e.getX();
-            this.y = e.getY();
-            this.width = 0;
-            this.height = 0;
-        }
-        else if(isLigne)
-        {
-            this.x = e.getX();
-            this.y = e.getY();
-            this.width = 0;
-            this.height = 0;
-        }
-        else if(isTexte)
+        
+        this.x = e.getX();
+        this.y = e.getY();
+        this.width = 0;
+        this.height = 0;
+
+        if(isTexte)
         {
             this.x = e.getX();
             this.y = e.getY();
@@ -139,7 +119,7 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
     @Override
     public void mouseReleased(MouseEvent e) 
     {
-        if(this.isCercle)
+        if(this.isCercle || isRectangle)
         {
             if(this.x < e.getX() && this.y < e.getY())
             {
@@ -165,42 +145,14 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
                 this.height = this.y - e.getY();
                 this.y = e.getY();
             }
-            this.dessinerCercle();
-        }
-        else if(isRectangle)
-        {
-            if(this.x < e.getX() && this.y < e.getY())
-            {
-                this.width = e.getX() - this.x;
-                this.height = e.getY() - this.y;
-            }
-            else if (this.x > e.getX() && this.y > e.getY())
-            {
-                this.width = this.x - e.getX();
-                this.height = this.y - e.getY();
-                this.x = e.getX();
-                this.y = e.getY();
-            }
-            else if (this.x > e.getX() && this.y < e.getY())
-            {
-                this.width = this.x - e.getX();
-                this.height = e.getY() - this.y;
-                this.x = e.getX();
-            }
-            else if (this.x < e.getX() && this.y > e.getY())
-            {
-                this.width = e.getX() - this.x;
-                this.height = this.y - e.getY();
-                this.y = e.getY();
-            }
-            this.dessinerRectangle();
         }
         else if(isLigne)
         {
             this.width = e.getX();
             this.height = e.getY();
-            this.dessinerLigne();
         }
+
+        this.dessinerForme();
     }
 
     @Override
@@ -220,14 +172,14 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
         {
             if(e.getKeyChar() == KeyEvent.VK_ENTER)
             {
-                this.dessinerTexte();
+                this.dessinerForme();
                 System.out.println(this.texte);
             }
             else
             {
                 this.texte += e.getKeyChar();
                 System.out.println(e.getKeyChar());
-                this.dessinerTexte();
+                this.dessinerForme();
             }
         }
     }
