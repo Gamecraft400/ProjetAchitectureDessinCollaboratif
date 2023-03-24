@@ -2,14 +2,21 @@ package ihm;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.border.Border;
 
 import controleur.Controleur;
 
@@ -24,33 +31,28 @@ public class PanelChoixCouleur extends JPanel implements ActionListener
 	{
 		this.ctrl = ctrl;
 		this.tabBtnCoul = new JButton[9];
-		this.setLayout(new GridLayout(1,8,150,0));
+		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		//afficher le contour du panel
 
-		this.add(new JLabel());
+		int x = 100;
 
+		this.add(Box.createRigidArea(new Dimension(500,0)));
 		for(int cpt = 0; cpt < COULEURS_DISPONIBLE.length; cpt++)
 		{
-			this.tabBtnCoul[cpt] = new JButton();
+			this.tabBtnCoul[cpt] = new JButton(" ");
 			this.tabBtnCoul[cpt].setBackground(COULEURS_DISPONIBLE[cpt]);
-			this.add(new DispoBouton(tabBtnCoul[cpt]));
+			this.tabBtnCoul[cpt].setFocusPainted(false);
+			this.tabBtnCoul[cpt].setPreferredSize(new Dimension(50,80));
+			this.add(this.tabBtnCoul[cpt]);
+			this.add(Box.createRigidArea(new Dimension(50,0)));
 			this.tabBtnCoul[cpt].addActionListener(this);
+			x += 60;
 		}
 
 		this.tabBtnCoul[8] = new JButton("+");
-		this.add(new DispoBouton(tabBtnCoul[8]));
-		this.tabBtnCoul[8].addActionListener(this);
+		this.add(tabBtnCoul[8]);
+		this.tabBtnCoul[8].addActionListener(this);	
 
-		this.add(new JLabel());
-
-	}
-	
-	class DispoBouton extends JPanel
-	{
-		public DispoBouton(JButton btnAction)
-		{
-			this.setLayout(new BorderLayout());
-			this.add(btnAction,BorderLayout.CENTER);
-		}
 	}
 
 	@Override
