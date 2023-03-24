@@ -29,6 +29,7 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
     {
         this.ctrl = ctrl;
         this.addMouseListener(this);
+        this.addKeyListener(this);
     }
 
     public void cercle(boolean isCercle)
@@ -68,24 +69,35 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
 
     public void dessinerCercle() 
     {
-        this.ctrl.ajouterOutil("Cercle", Color.BLACK);
+        this.ctrl.ajouterOutil("Cercle", this.ctrl.getCouleur());
         Graphics g = this.getGraphics();
+        g.setColor(this.ctrl.getCouleur());
         g.drawOval(this.x, this.y, this.width, this.height);
         
     }
 
     public void dessinerRectangle() 
     {
-        this.ctrl.ajouterOutil("Rectangle", Color.BLACK);
+        this.ctrl.ajouterOutil("Rectangle", this.ctrl.getCouleur());
         Graphics g = this.getGraphics();
+        g.setColor(this.ctrl.getCouleur());
         g.drawRect(this.x, this.y, this.width, this.height);
     }
 
     public void dessinerLigne() 
     {
-        this.ctrl.ajouterOutil("Ligne", Color.BLACK);
+        this.ctrl.ajouterOutil("Ligne", this.ctrl.getCouleur());
         Graphics g = this.getGraphics();
+        g.setColor(this.ctrl.getCouleur());
         g.drawLine(this.x, this.y, this.width, this.height);
+    }
+
+    public void dessinerTexte() 
+    {
+        this.ctrl.ajouterOutil("Texte", this.ctrl.getCouleur());
+        Graphics g = this.getGraphics();
+        g.setColor(this.ctrl.getCouleur());
+        g.drawString(this.texte, this.x, this.y);
     }
 
     @Override
@@ -206,19 +218,26 @@ public class PanelDessin extends JPanel implements MouseListener, KeyListener
     {
         if(isTexte)
         {
-            this.texte += e.getKeyChar();
+            if(e.getKeyChar() == KeyEvent.VK_ENTER)
+            {
+                this.dessinerTexte();
+                System.out.println(this.texte);
+            }
+            else
+            {
+                this.texte += e.getKeyChar();
+                System.out.println(e.getKeyChar());
+                this.dessinerTexte();
+            }
         }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyPressed'");
+        
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
     }
 }

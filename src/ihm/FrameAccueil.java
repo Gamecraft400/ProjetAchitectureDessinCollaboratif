@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import controleur.Controleur;
 import net.Serveur;
 import net.Client;
+import net.IpRecup;
 
 public class FrameAccueil extends JFrame implements ActionListener
 {
@@ -105,9 +106,10 @@ public class FrameAccueil extends JFrame implements ActionListener
             else
             {
                 System.out.println("Creer");
-                new Serveur();
+                
             }
 
+            
 
     
         }
@@ -119,7 +121,6 @@ public class FrameAccueil extends JFrame implements ActionListener
             }
             else
             {
-                System.out.println("Rejoindre");
                 this.frameDessin = new FrameDessin(this.ctrl);
                 this.dispose();
             }
