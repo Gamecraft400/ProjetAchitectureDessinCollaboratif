@@ -1,15 +1,10 @@
 package net;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInput;
 import java.io.PrintWriter;
 import java.net.Socket;
-
-import ihm.FrameDessin;
-import ihm.PanelDessin;
 
 public class Client 
 {
@@ -19,8 +14,6 @@ public class Client
     private BufferedReader in;
 
     private String pseudo;
-
-    private FrameDessin frameDessin;
     
     public Client(String pseudo) 
     {
@@ -32,8 +25,6 @@ public class Client
         try {
 
             socket = new Socket(hostname, port);
-            System.out.println("Connexion au serveur " + hostname + " sur le port " + port);
-            
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
@@ -61,24 +52,6 @@ public class Client
             return null;
         }
     }
-
-    public void receivePanelDessin(byte[] bytes) 
-    {
-        try {
-
-            ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-            ObjectInput in = new java.io.ObjectInputStream(bis);
-            PanelDessin panelDessin = (PanelDessin) in.readObject();
-
-            bis.close();
-            in.close();
-            
-            frameDessin.setPanelDessin(panelDessin);
-
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
     
     public void disconnect() 
     {
@@ -95,10 +68,6 @@ public class Client
 
     public String getPseudo() {
         return pseudo;
-    }
-
-    public void setFrameDessin(FrameDessin frameDessin) {
-        this.frameDessin = frameDessin;
     }
 
     /*public static void main(String[] args) 
