@@ -41,15 +41,17 @@ public class ClientHandler implements Runnable
     {
         try {
 
-            String inputLine;
-
-            while ((inputLine = in.readLine()) != null) 
+            byte[] inputObject;
+            
+            while(inputObject = in.readObject() != null)
             {
-                // Lire les messages envoyés par le client
-                System.out.println("Message reçu de " + clientSocket + " : " + inputLine);
-                // Envoyer le message à tous les autres clients connectés
-                server.broadcast(inputLine);
+                // Réception du panelDessin
+                panelDessin = (PanelDessin) in.readObject();
+
+                // Envoi du panelDessin à tous les clients
+                server.sendPanelDessin(panelDessin);
             }
+            
             // Le client s'est déconnecté
             server.removeClient(this);
             in.close();

@@ -17,11 +17,13 @@ public class Serveur
     private ServerSocket serverSocket;
     private ArrayList<ClientHandler> alClientsH = new ArrayList<>();
 
-    private Controleur controleur;
+    private Controleur ctrl;
     private FrameDessin frameDessin;
 
-    public Serveur() 
+    public Serveur(Controleur ctrl) 
     {
+        this.ctrl = ctrl;
+
         try {
 
             serverSocket = new ServerSocket(PORT);
@@ -30,6 +32,9 @@ public class Serveur
         } catch (IOException e) {
             System.out.println("Erreur lors du démarrage du serveur : " + e.getMessage());
         }
+
+        // Créer la fenêtre de dessin
+        frameDessin = FrameDessin.getInstance(this.ctrl);
     }
 
     public void listenForClients() {

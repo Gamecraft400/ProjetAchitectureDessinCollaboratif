@@ -109,7 +109,7 @@ public class FrameAccueil extends JFrame implements ActionListener
                     @Override
                     public void run() 
                     {
-                        serveur = new Serveur();
+                        serveur = new Serveur(ctrl);
                         System.out.println("Serveur lancé");
                         serveur.listenForClients();
 
@@ -124,8 +124,7 @@ public class FrameAccueil extends JFrame implements ActionListener
                 String ip = IpRecup.getLocalIpAddress();
                 System.out.println("IP : " + ip);
 
-                serveur.setFrameDessin(FrameDessin.getInstance(ctrl));
-
+            
             }
         }
         else if(e.getSource() == this.btnRejoindre)
@@ -148,7 +147,7 @@ public class FrameAccueil extends JFrame implements ActionListener
                 client.sendMessage("TU AS REUSSI !");
                 System.out.println(client.receiveMessage());
 
-                client.setFrameDessin(serveur.getInstance(ctrl));
+                serveur.sendPanelDessin(FrameDessin.getInstance(ctrl).getPanelDessin());
                 this.dispose();
             }
         }
