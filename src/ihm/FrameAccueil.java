@@ -22,6 +22,8 @@ public class FrameAccueil extends JFrame implements ActionListener
 
     private Serveur serveur;
 
+    private FrameDessin frameDessin;
+
     private JPanel panelAccueil;
 
     private JLabel     lblPseudo;
@@ -109,7 +111,7 @@ public class FrameAccueil extends JFrame implements ActionListener
                     @Override
                     public void run() 
                     {
-                        serveur = new Serveur(ctrl);
+                        serveur = new Serveur();
                         System.out.println("Serveur lancé");
                         serveur.listenForClients();
 
@@ -147,7 +149,7 @@ public class FrameAccueil extends JFrame implements ActionListener
                 client.sendMessage("TU AS REUSSI !");
                 System.out.println(client.receiveMessage());
 
-                serveur.sendPanelDessin(FrameDessin.getInstance(ctrl).getPanelDessin());
+                this.frameDessin = new FrameDessin(this.ctrl);
                 this.dispose();
             }
         }

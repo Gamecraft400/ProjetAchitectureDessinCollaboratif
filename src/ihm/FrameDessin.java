@@ -16,18 +16,6 @@ import controleur.Controleur;
 
 public class FrameDessin extends JFrame implements ActionListener
 {
-    //singleton
-    private static FrameDessin instance = null;
-
-    public static FrameDessin getInstance(Controleur ctrl)
-    {
-        if(instance == null)
-        {
-            instance = new FrameDessin(ctrl);
-        }
-        return instance;
-    }
-    
     private Controleur ctrl;
     private JPanel panelHaut;
     private PanelDessin paneldessin;
@@ -43,7 +31,7 @@ public class FrameDessin extends JFrame implements ActionListener
     private boolean isLigne = false;
     private boolean isTexte = false;
     
-    private FrameDessin(Controleur ctrl)
+    public FrameDessin(Controleur ctrl)
     {
         this.ctrl = ctrl;
         this.setTitle("Dessin");

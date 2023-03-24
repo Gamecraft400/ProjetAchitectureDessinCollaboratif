@@ -5,11 +5,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import ihm.FrameDessin;
-import ihm.PanelDessin;
-
-import controleur.Controleur;
-
 public class Serveur 
 {
     private static final int PORT = 1234;
@@ -17,13 +12,8 @@ public class Serveur
     private ServerSocket serverSocket;
     private ArrayList<ClientHandler> alClientsH = new ArrayList<>();
 
-    private Controleur ctrl;
-    private FrameDessin frameDessin;
-
-    public Serveur(Controleur ctrl) 
+    public Serveur() 
     {
-        this.ctrl = ctrl;
-
         try {
 
             serverSocket = new ServerSocket(PORT);
@@ -32,9 +22,6 @@ public class Serveur
         } catch (IOException e) {
             System.out.println("Erreur lors du démarrage du serveur : " + e.getMessage());
         }
-
-        // Créer la fenêtre de dessin
-        frameDessin = FrameDessin.getInstance(this.ctrl);
     }
 
     public void listenForClients() {
@@ -66,14 +53,6 @@ public class Serveur
         }
     }
 
-    public synchronized void sendPanelDessin(PanelDessin panelDessin) 
-    {
-        // Envoyer un message à tous les clients connectés
-        for (ClientHandler cH : alClientsH) {
-            cH.sendPanelDessin(panelDessin);
-        }
-    }
-
     public synchronized void removeClient(ClientHandler clientHandler) 
     {
         // Supprimer le clientHandler de la liste des clients connectés
@@ -85,22 +64,5 @@ public class Serveur
     {
         return alClientsH;
     }
-
-    public void setFrameDessin(FrameDessin frameDessin) 
-    {
-        this.frameDessin = frameDessin;
-    }
-
-    
-
-    /*public static void main(String[] args) 
-    {
-        Serveur server = new Serveur();
-        String ip = IpRecup.getLocalIpAddress();
-        System.out.println("IP : " + ip);
-
-        server.listenForClients();
-
-    }*/
 
 }
