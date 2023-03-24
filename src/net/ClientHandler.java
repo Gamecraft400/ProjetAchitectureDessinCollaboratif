@@ -1,10 +1,17 @@
 package net;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+
+import ihm.FrameDessin;
+import ihm.PanelDessin;
 
 public class ClientHandler implements Runnable 
 {
@@ -61,8 +68,32 @@ public class ClientHandler implements Runnable
         out.println(message);
     }
 
+    public void sendPanelDessin(PanelDessin panelDessin) 
+    {
+        try {
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(panelDessin);
+            byte[] data = byteArrayOutputStream.toByteArray();
+    
+            // Envoi du tableau de bytes contenant le panelDessin au client
+            OutputStream outputStream = clientSocket.getOutputStream();
+            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+            
+            dataOutputStream.writeInt(data.length);
+            dataOutputStream.write(data);
+            dataOutputStream.flush();
+            
+        } catch (IOException e) {
+            System.err.println("Erreur lors de l'envoi du panelDessin au client.");
+            e.printStackTrace();
+        }
+    }
+
     public Socket getClientSocket() 
     {
         return this.clientSocket;
     }
+
 }

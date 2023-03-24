@@ -9,7 +9,7 @@ import net.Client;
 public class Metier 
 {
     private List<Outil> alOutils;
-    private List<Client> alUtilisateurs;
+    private List<Client> alClient;
     private Color couleur;
 
     //singleton
@@ -26,7 +26,7 @@ public class Metier
     private Metier()
     {
         this.alOutils = new ArrayList<Outil>();
-        this.alUtilisateurs = new ArrayList<Client>();
+        this.alClient = new ArrayList<Client>();
     }
 
     public void ajouterOutil(Outil outil)
@@ -34,9 +34,9 @@ public class Metier
         this.alOutils.add(outil);
     }
 
-    public void ajouterUtilisateur(Client utilisateur)
+    public void ajouterClient(Client client)
     {
-        this.alUtilisateurs.add(utilisateur);
+        this.alClient.add(client);
     }
 
     public List<Outil> getOutils()
@@ -44,9 +44,9 @@ public class Metier
         return this.alOutils;
     }
 
-    public List<Client> getUtilisateurs()
+    public List<Client> getAlClients()
     {
-        return this.alUtilisateurs;
+        return this.alClient;
     }
 
     public void ajouterOutil(String outil, Color coul, int x, int y, int width, int height) 

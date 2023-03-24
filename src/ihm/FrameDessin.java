@@ -16,6 +16,18 @@ import controleur.Controleur;
 
 public class FrameDessin extends JFrame implements ActionListener
 {
+    //singleton
+    private static FrameDessin instance = null;
+
+    public static FrameDessin getInstance(Controleur ctrl)
+    {
+        if(instance == null)
+        {
+            instance = new FrameDessin(ctrl);
+        }
+        return instance;
+    }
+    
     private Controleur ctrl;
     private JPanel panelHaut;
     private PanelDessin paneldessin;
@@ -85,8 +97,7 @@ public class FrameDessin extends JFrame implements ActionListener
         this.panelChoixCouleur = new PanelChoixCouleur(this.ctrl);
         this.panelChoixCouleur.setPreferredSize(new Dimension(500, 60));
         
-        
-
+        this.add(this.panelChoixCouleur,BorderLayout.SOUTH);
         this.add(this.panelHaut, BorderLayout.NORTH);
         this.add(this.paneldessin, BorderLayout.CENTER);
         this.add(this.panelChoixCouleur,BorderLayout.SOUTH);
@@ -178,5 +189,13 @@ public class FrameDessin extends JFrame implements ActionListener
             this.isRectangle = false;
             this.isLigne = false;
         }
+    }
+
+    public PanelDessin getPanelDessin() {
+        return this.paneldessin;
+    }
+
+    public void setPanelDessin(PanelDessin paneldessin) {
+        this.paneldessin = paneldessin;
     }
 }
