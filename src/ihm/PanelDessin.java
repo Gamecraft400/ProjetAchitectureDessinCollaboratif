@@ -138,7 +138,7 @@ public class PanelDessin extends JPanel implements MouseListener
             String prompt = "Please add text to display";
             String input = JOptionPane.showInputDialog(this, prompt);
             this.texte = input;
-            this.ctrl.ajouterOutil("Texte", this.texte, this.ctrl.getCouleur(), this.x, this.x, this.width, this.height);
+            this.ctrl.ajouterOutil("Texte", this.texte, this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
             this.repaint();
         }
     }
