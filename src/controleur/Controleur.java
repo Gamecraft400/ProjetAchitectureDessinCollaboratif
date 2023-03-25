@@ -6,6 +6,7 @@ import java.util.List;
 
 import ihm.FrameAccueil;
 import metier.Metier;
+import metier.Outil;
 import net.Client;
 
 public class Controleur 
@@ -47,6 +48,11 @@ public class Controleur
     public Color getCouleur() 
     {
         return this.metier.getCouleur();
+    }
+
+    public List<Outil>getOutils() 
+    {
+        return this.metier.getOutils();
     }
 
     public void ajouterOutil(String string, String texte, Color couleur, int x, int y, int width, int height) 
