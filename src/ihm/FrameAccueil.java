@@ -106,8 +106,9 @@ public class FrameAccueil extends JFrame implements ActionListener
             {
                 System.out.println("Creer");
                 
-                serveur = new Serveur();
+                serveur = new Serveur(this.ctrl);
                 serveur.start();
+
 
                 Client client = new Client(this.ctrl, this.txtPseudo.getText());
                 client.connecter("localhost", 1234);
@@ -115,7 +116,7 @@ public class FrameAccueil extends JFrame implements ActionListener
                 String ip = IpRecup.getLocalIpAddress();
                 System.out.println("IP : " + ip);
                 this.dispose();
-            
+                
             }
         }
         else if(e.getSource() == this.btnRejoindre)

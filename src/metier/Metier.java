@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.Client;
+import net.ClientHandler;
 
 public class Metier 
 {
     private List<Outil> alOutils;
-    private List<Client> alClient;
+    private List<ClientHandler> alClient;
     private Color couleur;
 
     //singleton
@@ -26,7 +27,7 @@ public class Metier
     private Metier()
     {
         this.alOutils = new ArrayList<Outil>();
-        this.alClient = new ArrayList<Client>();
+        this.alClient = new ArrayList<ClientHandler>();
     }
 
     public void ajouterOutil(Outil outil)
@@ -34,17 +35,12 @@ public class Metier
         this.alOutils.add(outil);
     }
 
-    public void ajouterClient(Client client)
-    {
-        this.alClient.add(client);
-    }
-
     public List<Outil> getOutils()
     {
         return this.alOutils;
     }
 
-    public List<Client> getAlClients()
+    public List<ClientHandler> getAlClients()
     {
         return this.alClient;
     }
@@ -67,6 +63,22 @@ public class Metier
     public void ajouterOutil(String outil, String texte, Color couleur2, int x, int y, int width, int height) 
     {
         this.alOutils.add(new Outil(outil, texte, couleur2, x, y, width, height));
+        System.out.println("ajouterOutil METIER");
+    }
+
+
+    public void envoyerOutil(String string) 
+    {
+        for(ClientHandler client : this.alClient)
+        {
+            client.envoyerOutil(string);
+            System.out.println("envoyerOutil METIER");
+        }
+    }
+
+    public void ajoutClient(ClientHandler clientHandler) 
+    {
+        this.alClient.add(clientHandler);
     }
 
 }

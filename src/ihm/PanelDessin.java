@@ -3,6 +3,8 @@ package ihm;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,6 +17,7 @@ public class PanelDessin extends JPanel implements MouseListener
     Controleur ctrl;
 
     private FrameDessin frameDessin;
+    private List<Outil> outils;
 
     private int x;
     private int y;
@@ -31,6 +34,7 @@ public class PanelDessin extends JPanel implements MouseListener
     {
         this.ctrl = ctrl;
         this.frameDessin = frameDessin;
+        this.outils = this.ctrl.getOutils();
         this.addMouseListener(this);
     }
 
@@ -92,9 +96,9 @@ public class PanelDessin extends JPanel implements MouseListener
     {
         super.paintComponent(g);
 
-        if(this.ctrl.getOutils() != null)
+        if(!this.outils.isEmpty())
         {
-            for(Outil outil : this.ctrl.getOutils())
+            for(Outil outil : this.outils)
             {
                 g.setColor(outil.getCouleur());
                 
@@ -118,6 +122,8 @@ public class PanelDessin extends JPanel implements MouseListener
                     g.setColor(outil.getCouleur());
                     g.drawString(outil.getLibelle(), outil.getPosX(), outil.getPosY());
                 }
+
+                this.ctrl.envoyerOutil(outil.toString());
             }
         }
     }
@@ -204,5 +210,11 @@ public class PanelDessin extends JPanel implements MouseListener
 
     @Override
     public void mouseExited(MouseEvent e) {     
+    }
+
+    public void ajouterOutil(Outil outil) 
+    {
+        this.outils.add(outil);
+        this.repaint();
     }
 }

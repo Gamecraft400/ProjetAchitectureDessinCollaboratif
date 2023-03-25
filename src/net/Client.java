@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -43,25 +44,56 @@ public class Client implements Runnable
 
     public void run() 
     {
-        BufferedReader in = null;
-        PrintWriter out = null;
+        //BufferedReader in = null;
+        
 
-        try {
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
+       
+            //in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            //out = new PrintWriter(socket.getOutputStream(), true);
 
             // Boucle d'écoute des messages du serveur
-            while (true) 
-            {
+        
+       // while (true) {
+            try {
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String message = in.readLine();
 
-                if (message == null) 
-                {
-                    break;
+                if (message.startsWith("FORME")) {
+
+
+                    String[] infosOutil = message.split(";");
+                    for (String s : infosOutil) {
+                        System.out.println(s);
+                    }
+
+                    Outil outil = new Outil(infosOutil[1], infosOutil[2],
+                                            new Color(Integer.parseInt(infosOutil[3])), 
+                                            Integer.parseInt(infosOutil[4]), 
+                                            Integer.parseInt(infosOutil[5]), 
+                                            Integer.parseInt(infosOutil[6]), 
+                                            Integer.parseInt(infosOutil[7]));
+                    
+                    
+                    this.frameDessin.ajouterOutil(outil);
+                    this.aOutils.add(outil);
                 }
+                else
+                {
+                   
+                
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("==========client");
+                //break;
+            }
+        //}
+                
+
+
 
                 //si le message est FIN_LISTE_OUTILS, on lit la liste des outils et on les ajoute à la liste des outils
-                if (message.equals("FIN_LISTE_OUTILS")) 
+               /*if (message.equals("FIN_LISTE_OUTILS")) 
                 {
                     String listeOutils = in.readLine();
 
@@ -76,9 +108,9 @@ public class Client implements Runnable
 
                         listeOutils = in.readLine();
                     }
-                } 
+                } */
                 //si le message est NOUVEL_OUTIL, on ajoute l'outil à la liste des outils
-                else if (message.startsWith("NOUVEL_OUTIL")) 
+                /*else if (message.startsWith("NOUVEL_OUTIL")) 
                 {
                     // Traitement du nouvel outil envoyé par le serveur
                     String[] infosOutil = message.substring(12).split(",");
@@ -88,17 +120,12 @@ public class Client implements Runnable
                                             Integer.parseInt(infosOutil[4]), 
                                             Integer.parseInt(infosOutil[5]), 
                                             Integer.parseInt(infosOutil[6]));
-                    frameDessin.ajouterOutil(outil);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+                    frameDessin.ajouterOutil(outil);*/
+            
+    }
+
+    public void maj() 
+    {
+        frameDessin.maj();
     }
 }

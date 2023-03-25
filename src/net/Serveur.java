@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import controleur.Controleur;
 import metier.Outil;
 
 public class Serveur extends Thread 
@@ -14,12 +15,14 @@ public class Serveur extends Thread
     private ServerSocket serverSocket;
     private ArrayList<Outil> listeOutils = new ArrayList<>();
     private ArrayList<PrintWriter> clients = new ArrayList<>();
+    private Controleur ctrl;
 
-    public Serveur() 
+    public Serveur(Controleur ctrl) 
     {
         try {
 
-            serverSocket = new ServerSocket(PORT);
+        this.ctrl = ctrl;
+        serverSocket = new ServerSocket(PORT);
         System.out.println("Serveur démarré sur le port " + PORT);
             
         } catch (IOException e) {
@@ -37,8 +40,16 @@ public class Serveur extends Thread
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Nouvelle connexion entrante : " + clientSocket);
 
+                //envoyer aux clients connectés
+                for (PrintWriter client : clients) 
+                {
+                    client.println("NOUVELLE_CONNEXION " + clientSocket.toString());
+                    client.flush();
+                }
+
                 // Création d'un nouveau clientHandler pour gérer la connexion avec le client
-                ClientHandler clientHandler = new ClientHandler(clientSocket, listeOutils, clients);
+                ClientHandler clientHandler = new ClientHandler(this, clientSocket, listeOutils, clients);
+                this.ctrl.ajoutClient(clientHandler);
 
                 // Ajout du clientHandler à la liste des threads à exécuter
                 new Thread(clientHandler).start();
@@ -49,11 +60,14 @@ public class Serveur extends Thread
         }
     }
 
-    public void envoyerOutil(Outil outil) {
+    public void envoyerOutil(String outil) {
         // Envoi de l'outil à tous les clients connectés
         for (PrintWriter client : clients) 
         {
             client.println("NOUVEL_OUTIL " + outil.toString());
+            System.out.println("~~~~Serveur  " + outil);
+            client.println(outil);
+            client.flush();
         }
     }
 
@@ -61,6 +75,7 @@ public class Serveur extends Thread
         // Ajout du client à la liste des clients connectés
         clients.add(client);
     }
+
 }
 
 

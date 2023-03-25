@@ -195,5 +195,13 @@ public class FrameDessin extends JFrame implements ActionListener
     public void ajouterOutil(Outil outil)
     {
         this.outils.add(outil);
+        this.paneldessin.ajouterOutil(outil);
     }
+
+    public void maj()
+    {
+        this.paneldessin.repaint();
+    }
+
+
 }

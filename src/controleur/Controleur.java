@@ -8,6 +8,8 @@ import ihm.FrameAccueil;
 import metier.Metier;
 import metier.Outil;
 import net.Client;
+import net.ClientHandler;
+import net.Serveur;
 
 public class Controleur 
 {
@@ -30,12 +32,7 @@ public class Controleur
         this.metier.ajouterOutil(outil, coul, x, y, width, height);
     }
 
-    public void ajouterClient(Client client) 
-    {
-        this.metier.ajouterClient(client);
-    }
-
-    public List<Client> getAlClients() 
+    public List<ClientHandler> getAlClients() 
     {
         return this.metier.getAlClients();
     }
@@ -58,5 +55,18 @@ public class Controleur
     public void ajouterOutil(String string, String texte, Color couleur, int x, int y, int width, int height) 
     {
         this.metier.ajouterOutil(string, texte, couleur, x, y, width, height);
+        System.out.println("ajouterOutil CTRL");
     }
+
+    public void envoyerOutil(String string) 
+    {
+        this.metier.envoyerOutil(string);
+        System.out.println("envoyerOutil CTRL");
+    }
+
+    public void ajoutClient(ClientHandler clientHandler) 
+    {
+        this.metier.ajoutClient(clientHandler);
+    }
+
 }
