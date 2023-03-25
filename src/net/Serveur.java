@@ -1,76 +1,66 @@
 package net;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Serveur 
-{
-    private static final int PORT = 1234;
+import metier.Outil;
 
+public class Serveur extends Thread 
+{
+    private final int PORT = 1234;
     private ServerSocket serverSocket;
-    private ArrayList<ClientHandler> alClientsH = new ArrayList<>();
+    private ArrayList<Outil> listeOutils = new ArrayList<>();
+    private ArrayList<PrintWriter> clients = new ArrayList<>();
 
     public Serveur() 
     {
         try {
 
             serverSocket = new ServerSocket(PORT);
-            System.out.println("Serveur demarre sur le port " + PORT);
-
+        System.out.println("Serveur démarré sur le port " + PORT);
+            
         } catch (IOException e) {
-            System.out.println("Erreur lors du démarrage du serveur : " + e.getMessage());
+            e.printStackTrace();
         }
+        
     }
 
-    public void listenForClients() 
+    public void run() 
     {
-        while (true) {
-            try {
-                // Attendre qu'un client se connecte
+        try {
+
+            while (true) 
+            {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Nouvelle connexion entrante : " + clientSocket);
 
-                // Créer un nouveau clientHandler pour gérer la communication avec le client
-                ClientHandler clientHandler = new ClientHandler(clientSocket);
-                alClientsH.add(clientHandler);
+                // Création d'un nouveau clientHandler pour gérer la connexion avec le client
+                ClientHandler clientHandler = new ClientHandler(clientSocket, listeOutils, clients);
 
-                // Démarrer un thread pour gérer la communication avec le client
-                Thread clientThread = new Thread(clientHandler);
-                clientThread.start();
-
-            } catch (IOException e) {
-                System.out.println("Erreur lors de l'acceptation de la connexion : " + e.getMessage());
+                // Ajout du clientHandler à la liste des threads à exécuter
+                new Thread(clientHandler).start();
             }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public synchronized void broadcast(String message) 
-    {
-        // Envoyer un message à tous les clients connectés
-        for (ClientHandler cH : alClientsH) 
-        {   
-            cH.sendMessage(message);
+    public void envoyerOutil(Outil outil) {
+        // Envoi de l'outil à tous les clients connectés
+        for (PrintWriter client : clients) 
+        {
+            client.println("NOUVEL_OUTIL " + outil.toString());
         }
     }
 
-    public synchronized void removeClient(ClientHandler clientHandler) 
-    {
-        // Supprimer le clientHandler de la liste des clients connectés
-        alClientsH.remove(clientHandler);
-        System.out.println("Client déconnecté : " + clientHandler.getClientSocket());
+    public void ajouterClient(PrintWriter client) {
+        // Ajout du client à la liste des clients connectés
+        clients.add(client);
     }
-
-    public ArrayList<ClientHandler> getAlClientsH() 
-    {
-        return alClientsH;
-    }
-
-    public static void main(String[] args) 
-    {
-        Serveur server = new Serveur();
-        server.listenForClients();
-    }
-
 }
+
+

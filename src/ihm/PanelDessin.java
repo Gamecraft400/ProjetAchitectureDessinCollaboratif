@@ -8,10 +8,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
+import metier.Outil;
 
 public class PanelDessin extends JPanel implements MouseListener
 {
     Controleur ctrl;
+
+    private FrameDessin frameDessin;
+
     private int x;
     private int y;
     private int width;
@@ -23,9 +27,10 @@ public class PanelDessin extends JPanel implements MouseListener
     private boolean isLigne = false;
     private boolean isTexte = false;
 
-    public PanelDessin(Controleur ctrl)
+    public PanelDessin(Controleur ctrl, FrameDessin frameDessin)
     {
         this.ctrl = ctrl;
+        this.frameDessin = frameDessin;
         this.addMouseListener(this);
     }
 
@@ -96,22 +101,22 @@ public class PanelDessin extends JPanel implements MouseListener
 
         if(this.isCercle)
         {
-            this.ctrl.ajouterOutil("Cercle", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
+            this.frameDessin.ajouterOutil(new Outil("Cercle", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height));
             g.drawOval(this.x, this.y, this.width, this.height);
         }
         else if(this.isRectangle)
         {
-            this.ctrl.ajouterOutil("Rectangle", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
+            this.frameDessin.ajouterOutil(new Outil("Rectangle", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height));
             g.drawRect(this.x, this.y, this.width, this.height);
         }
         else if(this.isLigne)
         {
-            this.ctrl.ajouterOutil("Ligne", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
+            this.frameDessin.ajouterOutil(new Outil("Ligne", this.ctrl.getCouleur(), this.x, this.y, this.width, this.height));
             g.drawLine(this.x, this.y, this.width, this.height);
         }
         else if(this.isTexte)
         {
-            this.ctrl.ajouterOutil("Texte", this.texte, this.ctrl.getCouleur(), this.x, this.y, this.width, this.height);
+            this.frameDessin.ajouterOutil(new Outil("Texte", this.texte, this.ctrl.getCouleur(), this.x, this.y, this.width, this.height));
             g.drawString(this.texte, this.x, this.y);
         }
     }

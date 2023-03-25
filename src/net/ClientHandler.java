@@ -5,62 +5,69 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
-public class ClientHandler implements Runnable 
-{
+import metier.Outil;
 
-    private Socket clientSocket;
-    private PrintWriter out;
-    private BufferedReader in;
+public class ClientHandler implements Runnable {
+    private Socket socket;
+    private ArrayList<Outil> listeOutils;
+    private ArrayList<PrintWriter> clients;
 
-    public ClientHandler(Socket clientSocket) 
-    {
-        this.clientSocket = clientSocket;
-
-        try {
-
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-        } catch (IOException e) {
-            System.out.println("Erreur lors de la création du clientHandler : " + e.getMessage());
-        }
+    public ClientHandler(Socket socket, ArrayList<Outil> listeOutils, ArrayList<PrintWriter> clients) {
+        this.socket = socket;
+        this.listeOutils = listeOutils;
+        this.clients = clients;
     }
 
-    @Override
-    public void run() 
-    {
+    public void run() {
+        BufferedReader in = null;
+        PrintWriter out = null;
+
         try {
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
 
-            String inputLine;
+            // Ajout du nouveau client à la liste des clients connectés
+            clients.add(out);
 
-            // Attendre que le client envoie un message
-            while ((inputLine = in.readLine()) != null)
+            // Envoi de la liste des outils disponibles au nouveau client
+            for (Outil outil : listeOutils) 
             {
-                inputLine = in.readLine();
-                // Envoyer le message à tous les clients connectés
-                server.broadcast(inputLine);
+                out.println(outil.toString());
             }
 
-            // Le client s'est déconnecté
-            in.close();
-            out.close();
-            clientSocket.close();
+            out.println("FIN_LISTE_OUTILS");
 
+            // Boucle d'écoute des messages du client
+            while (true) 
+            {
+                String message = in.readLine();
+                if (message == null) 
+                {
+                    break;
+                }
+
+                if (message.startsWith("NOUVEL_OUTIL")) 
+                {
+                    // Envoi du nouvel outil à tous les clients connectés
+                    for (PrintWriter client : clients) 
+                    {
+                        client.println("NOUVEL_OUTIL," + message.substring(12));
+                    }
+                }
+            }
 
         } catch (IOException e) {
-            System.out.println("Erreur lors de la communication avec le client " + clientSocket + " : " + e.getMessage());
-            server.removeClient(this);
+            e.printStackTrace();
+        } finally {
+            // Retrait du client de la liste des clients connectés
+            clients.remove(out);
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-    }
-
-    public void sendMessage(String message) 
-    {
-        out.println(message);
-    }
-
-    public Socket getClientSocket() 
-    {
-        return this.clientSocket;
     }
 }

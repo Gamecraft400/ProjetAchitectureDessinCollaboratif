@@ -61,7 +61,7 @@ public class Outil
 
 	public String toString()
 	{
-		return "Outil selectionne " + this.outil + " de couleur " + this.couleur + " ( "+ this.posX + " , " + this.posY + " )";
+		return this.outil + "," + this.libelle + "," + this.couleur + "," + this.posX + "," + this.posY + "," + this.largeur + "," + this.hauteur;
 	}
 
 }

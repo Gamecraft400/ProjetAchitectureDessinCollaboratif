@@ -106,23 +106,12 @@ public class FrameAccueil extends JFrame implements ActionListener
             {
                 System.out.println("Creer");
                 
-                Thread serveurThread = new Thread(new Runnable() 
-                {
-                    @Override
-                    public void run() 
-                    {
-                        serveur = new Serveur();
-                        System.out.println("Serveur lancé");
-                        serveur.listenForClients();
+                serveur = new Serveur();
+                serveur.start();
 
-                    }
-                    
-                });
+                Client client = new Client(this.ctrl, this.txtPseudo.getText());
+                client.connecter("localhost", 1234);
 
-                serveurThread.start();
-
-                Client client = new Client(this.txtPseudo.getText());
-                this.ctrl.ajouterClient(client);
                 String ip = IpRecup.getLocalIpAddress();
                 System.out.println("IP : " + ip);
                 this.dispose();
@@ -140,15 +129,11 @@ public class FrameAccueil extends JFrame implements ActionListener
                 System.out.println("Rejoindre");
 
                 String pseudo = this.txtPseudo.getText();
-                Client client = new Client(pseudo);
+                Client client = new Client(this.ctrl, pseudo);
 
                 String ip = this.txtIP.getText();
-                client.connect(ip, 1234);
-                
-                client.sendMessage("TU AS REUSSI !");
-                System.out.println(client.receiveMessage());
+                client.connecter(ip, 1234);
 
-                this.frameDessin = new FrameDessin(this.ctrl);
                 this.dispose();
             }
         }
