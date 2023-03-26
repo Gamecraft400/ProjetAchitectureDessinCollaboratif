@@ -49,43 +49,43 @@ public class Client implements Runnable
 
 
 
-    public synchronized void run() 
+    public void run() 
     {
        
             try {
+
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                String message = in.readLine();
+
+                    String message = in.readLine();
 
                 
-                if (message.startsWith("FORME")) {
-
-
-                    String[] infosOutil = message.split(";");
-
-                    for (String s : infosOutil) {
-                        System.out.println(s);
-                    }
-
-                    Outil outil = new Outil(infosOutil[1], infosOutil[2],
-                                            new Color(Integer.parseInt(infosOutil[3])), 
-                                            Integer.parseInt(infosOutil[4]), 
-                                            Integer.parseInt(infosOutil[5]), 
-                                            Integer.parseInt(infosOutil[6]), 
-                                            Integer.parseInt(infosOutil[7]));
-                    
-
-
-
-                    if(!this.aOutils.contains(outil)) 
-                    {                        
-                        this.frameDessin.ajouterOutil(outil);
-                        this.aOutils.add(outil);   
-                    }
-
-                    
-
-                    message = in.readLine();
+                    if (message.startsWith("FORME")) {
+    
+    
+                        String[] infosOutil = message.split(";");
+    
+                        for (String s : infosOutil) {
+                            System.out.println(s);
+                        }
+    
+                        Outil outil = new Outil(infosOutil[1], infosOutil[2],
+                                                new Color(Integer.parseInt(infosOutil[3])), 
+                                                Integer.parseInt(infosOutil[4]), 
+                                                Integer.parseInt(infosOutil[5]), 
+                                                Integer.parseInt(infosOutil[6]), 
+                                                Integer.parseInt(infosOutil[7]));
+                        
+    
+    
+    
+                        if(!this.aOutils.contains(outil)) 
+                        {                        
+                            this.frameDessin.ajouterOutil(outil);
+                            this.aOutils.add(outil);   
+                        }
                 }
+                
+                
             
                
             } catch (IOException e) {

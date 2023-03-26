@@ -60,7 +60,7 @@ public class Controleur
         System.out.println("ajouterOutil CTRL");
     }
 
-    public void envoyerOutil(String string) 
+    public synchronized void envoyerOutil(String string) 
     {
         this.metier.envoyerOutil(string);
         System.out.println("envoyerOutil CTRL");
