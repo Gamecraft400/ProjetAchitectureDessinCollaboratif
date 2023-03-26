@@ -114,7 +114,12 @@ public class FrameAccueil extends JFrame implements ActionListener
 
                 Client client = new Client(this.ctrl, this.txtPseudo.getText(), "localhost", 1234, (ArrayList<Outil>) this.ctrl.getOutils());
 
+                serveurThread.start();
+
+                String pseudo = this.txtPseudo.getText();
                 String ip = IpRecup.getLocalIpAddress();
+                this.ctrl.ajouterClient(pseudo, ip);
+
                 System.out.println("IP : " + ip);
                 new FrameDessin(this.ctrl);
                 this.dispose();
@@ -129,12 +134,11 @@ public class FrameAccueil extends JFrame implements ActionListener
             }
             else
             {
-                System.out.println("Rejoindre");
 
                 String pseudo = this.txtPseudo.getText();
                 String ip = this.txtIP.getText();
-                
-                Client client = new Client(this.ctrl, pseudo, ip, 1234, (ArrayList<Outil>) this.ctrl.getOutils());
+                this.ctrl.ajouterClient(pseudo, ip);
+
 
                 this.dispose();
             }
@@ -142,9 +146,8 @@ public class FrameAccueil extends JFrame implements ActionListener
         
     }
 
-    public Component getPanelDessin() 
-    {
-        return this.frameDessin.getPanelDessin();
+    public void majIHM() {
+        this.frameDessin.majIHM();
     }
 }
 

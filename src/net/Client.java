@@ -2,6 +2,8 @@ package net;
 
 import java.awt.Color;
 import java.awt.List;
+import metier.Metier;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -12,30 +14,26 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import controleur.Controleur;
-import ihm.FrameDessin;
-import ihm.PanelDessin;
-import metier.Outil;
-
-public class Client implements Runnable 
+public class Client implements Runnable
 {
     private Socket socket;
-    private ArrayList<Outil> aOutils;
-    private FrameDessin frameDessin;
+    private Metier metier;
+
+    private PrintWriter out;
+    private BufferedReader in;
 
     private String pseudo;
-
-    private Controleur ctrl;
-
-
-    public Client(Controleur ctrl, String pseudo, String ip, int port, ArrayList<Outil> arrayList) 
+    
+    public Client(String pseudo, Metier metier)
     {
 
         this.ctrl = ctrl;
         this.pseudo = pseudo;
-        this.aOutils = arrayList;
-        this.frameDessin = new FrameDessin(this.ctrl, aOutils);
-
+        this.metier = metier;
+    }
+    
+    public boolean connect(String hostname, int port) 
+    {
         try {
             socket = new Socket(ip, port);
             new Thread(this).start();
@@ -61,8 +59,29 @@ public class Client implements Runnable
                 
                     if (message.startsWith("FORME")) {
     
+    public void sendMessage(String message) 
+    {
+        out.println(pseudo + ":" + message);
+    }
     
-                        String[] infosOutil = message.split(";");
+    public void run()
+    {
+        try {
+
+            String inputLine;
+
+            while ((inputLine = in.readLine()) != null)
+            {
+                // Lire les messages envoyés par le clientHandler
+
+                //envoie du message au Metier.
+                this.metier.traiterDonnees(inputLine);
+            }
+
+        } catch (IOException e) {
+            System.out.println("Erreur lors de la réception d'un message : " + e.getMessage());
+        }
+    }
     
                         for (String s : infosOutil) {
                             System.out.println(s);
@@ -94,4 +113,5 @@ public class Client implements Runnable
                 //break;   
             }                         
     }
+
 }

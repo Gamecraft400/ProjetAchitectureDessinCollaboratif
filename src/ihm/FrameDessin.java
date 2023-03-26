@@ -216,4 +216,7 @@ public class FrameDessin extends JFrame implements ActionListener
     }
 
 
+    public void majIHM() {
+        this.paneldessin.majIHM();
+    }
 }

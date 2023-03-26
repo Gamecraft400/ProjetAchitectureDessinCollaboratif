@@ -20,7 +20,7 @@ public class Controleur
     public Controleur()
     {
         this.frameAccueil = new FrameAccueil(this);
-        this.metier = Metier.getInstance();
+        this.metier = Metier.getInstance(this);
     }
 
     public static void main(String[] args) 
@@ -33,7 +33,12 @@ public class Controleur
         this.metier.ajouterOutil(outil, coul, x, y, width, height);
     }
 
-    public List<ClientHandler> getAlClients() 
+    public void ajouterClient(String p, String i)
+    {
+        this.metier.ajouterClient(p,i);
+    }
+
+    public List<Client> getAlClients() 
     {
         return this.metier.getAlClients();
     }
@@ -74,5 +79,13 @@ public class Controleur
     public void ajouterOutil(Outil outil) 
     {
         this.metier.ajouterOutil(outil);
+    }
+
+    public void majIHM() {
+        this.frameAccueil.majIHM();
+    }
+
+    public List<Outil> getAlOutilsServeur() {
+        return this.metier.getAlOutilsServeur();
     }
 }

@@ -63,7 +63,7 @@ public class Outil
 
 	public String toString()
 	{
-		return "FORME;" + this.outil + ";" + this.libelle + ";" + this.couleur.getRGB() + ";" + this.posX + ";" + this.posY + ";" + this.largeur + ";" + this.hauteur;
+		return this.outil + ";" + this.libelle +";" + this.couleur.getRGB() + ";"+ this.posX + ";" + this.posY + ";" + this.largeur + ";" + this.hauteur + ";";
 	}
 
 }
