@@ -1,6 +1,7 @@
 package ihm;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -138,6 +139,11 @@ public class FrameAccueil extends JFrame implements ActionListener
             }
         }
         
+    }
+
+    public Component getPanelDessin() 
+    {
+        return this.frameDessin.getPanelDessin();
     }
 }
 

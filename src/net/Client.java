@@ -51,16 +51,7 @@ public class Client implements Runnable
 
     public synchronized void run() 
     {
-        //BufferedReader in = null;
-        
-
        
-            //in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            //out = new PrintWriter(socket.getOutputStream(), true);
-
-            // Boucle d'écoute des messages du serveur
-        
-        
             try {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String message = in.readLine();
@@ -82,55 +73,25 @@ public class Client implements Runnable
                                             Integer.parseInt(infosOutil[6]), 
                                             Integer.parseInt(infosOutil[7]));
                     
+
+
+
+                    if(!this.aOutils.contains(outil)) 
+                    {                        
+                        this.frameDessin.ajouterOutil(outil);
+                        this.aOutils.add(outil);   
+                    }
+
                     
-                    this.frameDessin.ajouterOutil(outil);
-                    this.aOutils.add(outil);
+
+                    message = in.readLine();
                 }
             
                
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("==========client");
-                //break;
-            }
-                
-
-
-
-                //si le message est FIN_LISTE_OUTILS, on lit la liste des outils et on les ajoute à la liste des outils
-               /*if (message.equals("FIN_LISTE_OUTILS")) 
-                {
-                    String listeOutils = in.readLine();
-
-                    while (listeOutils != null) 
-                    {
-
-                        String[] infos = listeOutils.split(",");
-                        Outil outil = new Outil(infos[0], infos[1], new Color(Integer.parseInt(infos[2])),
-                                Integer.parseInt(infos[3]), Integer.parseInt(infos[4]), Integer.parseInt(infos[5]),
-                                Integer.parseInt(infos[6]));
-                                aOutils.add(outil);
-
-                        listeOutils = in.readLine();
-                    }
-                } */
-                //si le message est NOUVEL_OUTIL, on ajoute l'outil à la liste des outils
-                /*else if (message.startsWith("NOUVEL_OUTIL")) 
-                {
-                    // Traitement du nouvel outil envoyé par le serveur
-                    String[] infosOutil = message.substring(12).split(",");
-                    Outil outil = new Outil(infosOutil[0], infosOutil[1], 
-                                            new Color(Integer.parseInt(infosOutil[2])), 
-                                            Integer.parseInt(infosOutil[3]), 
-                                            Integer.parseInt(infosOutil[4]), 
-                                            Integer.parseInt(infosOutil[5]), 
-                                            Integer.parseInt(infosOutil[6]));
-                    frameDessin.ajouterOutil(outil);*/
-            
-    }
-
-    public void maj() 
-    {
-        frameDessin.maj();
+                //break;   
+            }                         
     }
 }

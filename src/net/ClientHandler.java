@@ -43,7 +43,7 @@ public class ClientHandler implements Runnable {
             
             String outil = in.readLine();
 
-            if (outil != null) {
+            if (outil.startsWith("FORME")) {
                 this.envoyerOutil(outil);
             }
 
