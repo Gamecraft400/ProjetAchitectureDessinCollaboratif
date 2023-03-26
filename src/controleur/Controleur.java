@@ -15,6 +15,7 @@ public class Controleur
 {
     private FrameAccueil frameAccueil;
     private Metier metier;
+    private Serveur serveur;
 
     public Controleur()
     {
@@ -67,6 +68,11 @@ public class Controleur
     public void ajoutClient(ClientHandler clientHandler) 
     {
         this.metier.ajoutClient(clientHandler);
+    }
+
+    public void setServeur(Serveur serveur2) 
+    {
+        this.serveur = serveur2;
     }
 
 }

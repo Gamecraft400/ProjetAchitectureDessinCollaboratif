@@ -8,65 +8,51 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
+import ihm.PanelDessin;
 import metier.Outil;
 
 public class ClientHandler implements Runnable {
     private Socket socket;
-    private ArrayList<Outil> listeOutils;
-    private ArrayList<PrintWriter> clients;
-    private static Serveur serveur;
 
-    public ClientHandler(Serveur serveur, Socket socket, ArrayList<Outil> listeOutils, ArrayList<PrintWriter> clients) {
-        this.socket = socket;
+    private BufferedReader in = null;
+    private PrintWriter out = null;
+    private List<Outil> listeOutils;
+    private ArrayList<ClientHandler> alClients;
+
+    public ClientHandler(Socket clientSocket, List<Outil> listeOutils, ArrayList<ClientHandler> alClients) {
+        
+        this.socket = clientSocket;
         this.listeOutils = listeOutils;
-        this.clients = clients;
-        this.serveur = serveur;
+        this.alClients = alClients;
+
+        try {
+			in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+			out = new PrintWriter(this.socket.getOutputStream(), true);
+		} catch (IOException e) {}
+
+        System.out.println("ClientHandler créé");
     }
 
     public void run() {
-        BufferedReader in = null;
-        PrintWriter out = null;
 
         try {
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
 
-            // Ajout du nouveau client à la liste des clients connectés
-            clients.add(out);
+            this.alClients.add(this);
+            
+            String outil = in.readLine();
 
-            // Envoi de la liste des outils disponibles au nouveau client
-            /*for (Outil outil : listeOutils) 
-            {
-                out.println(outil.toString());
-            }*/
-
-            //out.println("FIN_LISTE_OUTILS");
-
-            // Boucle d'écoute des messages du client
-            while (true) 
-            {
-                String message = in.readLine();
-                if (message == null) 
-                {
-                    break;
-                }
-
-                if (message.startsWith("NOUVEL_OUTIL")) 
-                {
-                    // Envoi du nouvel outil à tous les clients connectés
-                    for (PrintWriter client : clients) 
-                    {
-                        client.println("NOUVEL_OUTIL," + message.substring(12));
-                    }
-                }
+            if (outil != null) {
+                this.envoyerOutil(outil);
             }
+
+            
+
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            // Retrait du client de la liste des clients connectés
-            clients.remove(out);
             try {
                 socket.close();
             } catch (IOException e) {
@@ -77,7 +63,7 @@ public class ClientHandler implements Runnable {
 
     public synchronized void envoyerOutil(String outil) 
     {
-       /* try {
+        try {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             System.out.println("~~~~Handler  " + outil);
             out.println(outil);
@@ -85,9 +71,7 @@ public class ClientHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("====handler envoyer");
-        }*/
-        this.serveur.envoyerOutil(outil);
-        
+        }        
     }
 
     public synchronized void recevoirOutil() {

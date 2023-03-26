@@ -3,6 +3,7 @@ package ihm;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controleur.Controleur;
+import metier.Outil;
 import net.Client;
 import net.IpRecup;
 import net.Serveur;
@@ -106,12 +108,10 @@ public class FrameAccueil extends JFrame implements ActionListener
             {
                 System.out.println("Creer");
                 
-                serveur = new Serveur(this.ctrl);
+                serveur = new Serveur(this.ctrl, this.ctrl.getOutils());
                 serveur.start();
 
-
-                Client client = new Client(this.ctrl, this.txtPseudo.getText());
-                client.connecter("localhost", 1234);
+                Client client = new Client(this.ctrl, this.txtPseudo.getText(), "localhost", 1234, (ArrayList<Outil>) this.ctrl.getOutils());
 
                 String ip = IpRecup.getLocalIpAddress();
                 System.out.println("IP : " + ip);
@@ -130,10 +130,9 @@ public class FrameAccueil extends JFrame implements ActionListener
                 System.out.println("Rejoindre");
 
                 String pseudo = this.txtPseudo.getText();
-                Client client = new Client(this.ctrl, pseudo);
-
                 String ip = this.txtIP.getText();
-                client.connecter(ip, 1234);
+                
+                Client client = new Client(this.ctrl, pseudo, ip, 1234, (ArrayList<Outil>) this.ctrl.getOutils());
 
                 this.dispose();
             }

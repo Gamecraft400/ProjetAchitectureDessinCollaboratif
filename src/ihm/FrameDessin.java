@@ -42,7 +42,7 @@ public class FrameDessin extends JFrame implements ActionListener
         this.setTitle("Dessin");
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
+        //this.setResizable(false);
         this.setBackground(new Color(217,217,217));
         this.setLayout(new BorderLayout());
 
