@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
+import metier.Outil;
 
 public class FrameDessin extends JFrame implements ActionListener
 {
@@ -31,15 +33,18 @@ public class FrameDessin extends JFrame implements ActionListener
     private boolean isRectangle = false;
     private boolean isLigne = false;
     private boolean isTexte = false;
+
+    private ArrayList<Outil> outils;
     private boolean isFill = false;
     
-    public FrameDessin(Controleur ctrl)
+    public FrameDessin(Controleur ctrl, ArrayList<Outil> outils)
     {
         this.ctrl = ctrl;
+        this.outils = outils;
         this.setTitle("Dessin");
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
+        //this.setResizable(false);
         this.setBackground(new Color(217,217,217));
         this.setLayout(new BorderLayout());
 
@@ -85,7 +90,7 @@ public class FrameDessin extends JFrame implements ActionListener
         this.panelHaut.add(this.btnFill);
         
         //création du panel dessin
-        this.paneldessin = new PanelDessin(this.ctrl);
+        this.paneldessin = new PanelDessin(this.ctrl, this);
 
         //création du panel choix couleur
         this.panelChoixCouleur = new PanelChoixCouleur(this.ctrl);
@@ -197,5 +202,21 @@ public class FrameDessin extends JFrame implements ActionListener
 
     public void setPanelDessin(PanelDessin paneldessin) {
         this.paneldessin = paneldessin;
+    }
+
+    public void ajouterOutil(Outil outil)
+    {
+        this.outils.add(outil);
+        this.paneldessin.ajouterOutil(outil);
+    }
+
+    public void maj()
+    {
+        this.paneldessin.repaint();
+    }
+
+
+    public void majIHM() {
+        this.paneldessin.majIHM();
     }
 }

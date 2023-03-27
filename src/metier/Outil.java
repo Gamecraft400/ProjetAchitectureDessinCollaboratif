@@ -22,6 +22,8 @@ public class Outil
 		this.outil = outil;
 		this.libelle = libelle;
 		this.couleur = couleur;
+		if(couleur == null)
+			this.couleur = Color.BLACK;
 		this.posX = posX;
 		this.posY = posY;
 		this.largeur = largeur;
@@ -61,7 +63,7 @@ public class Outil
 
 	public String toString()
 	{
-		return "Outil selectionne " + this.outil + " de couleur " + this.couleur + " ( "+ this.posX + " , " + this.posY + " )";
+		return this.outil + ";" + this.libelle +";" + this.couleur.getRGB() + ";"+ this.posX + ";" + this.posY + ";" + this.largeur + ";" + this.hauteur + ";";
 	}
 
 }

@@ -3,66 +3,84 @@ package net;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ClientHandler implements Runnable 
-{
+import ihm.PanelDessin;
+import metier.Outil;
 
-    private Socket clientSocket;
-    private Serveur server;
-    private PrintWriter out;
-    private BufferedReader in;
+public class ClientHandler implements Runnable {
+    private Socket socket;
 
-    public ClientHandler(Socket clientSocket, Serveur server) 
-    {
-        this.clientSocket = clientSocket;
-        this.server = server;
+    private BufferedReader in = null;
+    private PrintWriter out = null;
+    private List<Outil> listeOutils;
+    private ArrayList<ClientHandler> alClients;
+
+    public ClientHandler(Socket clientSocket, List<Outil> listeOutils, ArrayList<ClientHandler> alClients) {
+        
+        this.socket = clientSocket;
+        this.listeOutils = listeOutils;
+        this.alClients = alClients;
 
         try {
+			in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+			out = new PrintWriter(this.socket.getOutputStream(), true);
+		} catch (IOException e) {}
 
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-        } catch (IOException e) {
-            System.out.println("Erreur lors de la création du clientHandler : " + e.getMessage());
-        }
+        System.out.println("ClientHandler créé");
     }
 
-    @Override
-    public void run() 
-    {
+    public void run() {
+
         try {
 
-            String inputLine;
+            this.alClients.add(this);
+            
+            String outil = in.readLine();
 
-            while ((inputLine = in.readLine()) != null) 
-            {
-                // Lire les messages envoyés par le client
-                System.out.println("Message reçu de " + clientSocket + " : " + inputLine);
-                // Envoyer le message à tous les autres clients connectés
-                server.broadcast(inputLine);
+            if (outil.startsWith("FORME")) {
+                this.envoyerOutil(outil);
             }
-            // Le client s'est déconnecté
-            server.removeClient(this);
-            in.close();
-            out.close();
-            clientSocket.close();
+
+            
 
 
         } catch (IOException e) {
-            System.out.println("Erreur lors de la communication avec le client " + clientSocket + " : " + e.getMessage());
-            server.removeClient(this);
+            e.printStackTrace();
+        } finally {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void sendMessage(String message) 
+    public synchronized void envoyerOutil(String outil) 
     {
-        out.println(message);
+        try {
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            System.out.println("~~~~Handler  " + outil);
+            out.println(outil);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("====handler envoyer");
+        }        
     }
 
-    public Socket getClientSocket() 
-    {
-        return this.clientSocket;
+    public synchronized void recevoirOutil() {
+        try {
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            String outil = in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("====handler recevoir");
+        }
     }
 }

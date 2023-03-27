@@ -1,8 +1,10 @@
 package ihm;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controleur.Controleur;
+import metier.Outil;
 import net.Client;
 import net.IpRecup;
 import net.Serveur;
@@ -106,27 +109,21 @@ public class FrameAccueil extends JFrame implements ActionListener
             {
                 System.out.println("Creer");
                 
-                Thread serveurThread = new Thread(new Runnable() 
-                {
-                    @Override
-                    public void run() 
-                    {
-                        serveur = new Serveur();
-                        System.out.println("Serveur lancé");
-                        serveur.listenForClients();
+                serveur = new Serveur(this.ctrl, this.ctrl.getOutils());
+                serveur.start();
 
-                    }
-                    
-                });
+                Client client = new Client(this.ctrl, this.txtPseudo.getText(), "localhost", 1234, (ArrayList<Outil>) this.ctrl.getOutils());
 
                 serveurThread.start();
 
-                Client client = new Client(this.txtPseudo.getText());
-                this.ctrl.ajouterClient(client);
+                String pseudo = this.txtPseudo.getText();
                 String ip = IpRecup.getLocalIpAddress();
+                this.ctrl.ajouterClient(pseudo, ip);
+
                 System.out.println("IP : " + ip);
                 new FrameDessin(this.ctrl);
                 this.dispose();
+                
             }
         }
         else if(e.getSource() == this.btnRejoindre)
@@ -137,23 +134,20 @@ public class FrameAccueil extends JFrame implements ActionListener
             }
             else
             {
-                System.out.println("Rejoindre");
 
                 String pseudo = this.txtPseudo.getText();
-                Client client = new Client(pseudo);
-                this.ctrl.ajouterClient(client);
-
                 String ip = this.txtIP.getText();
-                client.connect(ip, 1234);
-                
-                client.sendMessage("TU AS REUSSI !");
-                System.out.println(client.receiveMessage());
+                this.ctrl.ajouterClient(pseudo, ip);
 
-                this.frameDessin = new FrameDessin(this.ctrl);
+
                 this.dispose();
             }
         }
         
+    }
+
+    public void majIHM() {
+        this.frameDessin.majIHM();
     }
 }
 

@@ -1,83 +1,144 @@
 package net;
 
+import java.awt.Color;
+import java.awt.List;
+import metier.Metier;
+
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
-public class Client 
+public class Client implements Runnable
 {
     private Socket socket;
+    private Metier metier;
 
     private PrintWriter out;
     private BufferedReader in;
 
     private String pseudo;
     
-    public Client(String pseudo) 
+    public Client(String pseudo, Metier metier)
     {
+
+        this.ctrl = ctrl;
         this.pseudo = pseudo;
+        this.metier = metier;
     }
     
     public boolean connect(String hostname, int port) 
     {
         try {
-
-            socket = new Socket(hostname, port);
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            return true;
-
+            socket = new Socket(ip, port);
+            new Thread(this).start();
+            System.out.println("Connexion établie " +  ip);
         } catch (IOException e) {
-            System.out.println("Erreur lors de la connexion au serveur : " + e.getMessage());
-            return false;
+            e.printStackTrace();
         }
+
+        System.out.println("==== Client créé");
     }
+
+
+
+    public synchronized void run() 
+    {
+       
+            try {
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                String message = in.readLine();
+
+                
+<<<<<<< HEAD
+                    if (message.startsWith("FORME")) {
     
     public void sendMessage(String message) 
     {
-        out.println(pseudo + ": " + message);
+        out.println(pseudo + ":" + message);
     }
     
-    public String receiveMessage() 
+    public void run()
     {
         try {
 
-            return in.readLine();
+            String inputLine;
+
+            while ((inputLine = in.readLine()) != null)
+            {
+                // Lire les messages envoyés par le clientHandler
+
+                //envoie du message au Metier.
+                this.metier.traiterDonnees(inputLine);
+            }
 
         } catch (IOException e) {
             System.out.println("Erreur lors de la réception d'un message : " + e.getMessage());
-            return null;
         }
     }
     
-    public void disconnect() 
-    {
-        try {
+                        for (String s : infosOutil) {
+                            System.out.println(s);
+                        }
+    
+                        Outil outil = new Outil(infosOutil[1], infosOutil[2],
+                                                new Color(Integer.parseInt(infosOutil[3])), 
+                                                Integer.parseInt(infosOutil[4]), 
+                                                Integer.parseInt(infosOutil[5]), 
+                                                Integer.parseInt(infosOutil[6]), 
+                                                Integer.parseInt(infosOutil[7]));
+                        
+    
+    
+    
+                        if(!this.aOutils.contains(outil)) 
+                        {                        
+                            this.frameDessin.ajouterOutil(outil);
+                            this.aOutils.add(outil);   
+                        }
+=======
+                if (message.startsWith("FORME")) {
 
-            in.close();
-            out.close();
-            socket.close();
 
-        } catch (IOException e) {
-            System.out.println("Erreur lors de la déconnexion : " + e.getMessage());
-        }
+                    String[] infosOutil = message.split(";");
+
+                    for (String s : infosOutil) {
+                        System.out.println(s);
+                    }
+
+                    Outil outil = new Outil(infosOutil[1], infosOutil[2],
+                                            new Color(Integer.parseInt(infosOutil[3])), 
+                                            Integer.parseInt(infosOutil[4]), 
+                                            Integer.parseInt(infosOutil[5]), 
+                                            Integer.parseInt(infosOutil[6]), 
+                                            Integer.parseInt(infosOutil[7]));
+                    
+
+
+
+                    if(!this.aOutils.contains(outil)) 
+                    {                        
+                        this.frameDessin.ajouterOutil(outil);
+                        this.aOutils.add(outil);   
+                    }
+
+                    
+
+                    message = in.readLine();
+>>>>>>> parent of 0618213 (ouin)
+                }
+            
+               
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("==========client");
+                //break;   
+            }                         
     }
 
-    public String getPseudo() {
-        return pseudo;
-    }
-
-    /*public static void main(String[] args) 
-    {
-        Client client = new Client("Pseudo");
-        client.connect("localhost", 1234);
-        
-        client.sendMessage("Bonjour");
-        System.out.println(client.receiveMessage());
-        
-        client.disconnect();
-    }*/
 }
