@@ -1,15 +1,23 @@
 package ihm;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.border.Border;
+
 import controleur.Controleur;
 
 public class PanelChoixCouleur extends JPanel implements ActionListener
@@ -24,6 +32,9 @@ public class PanelChoixCouleur extends JPanel implements ActionListener
 		this.ctrl = ctrl;
 		this.tabBtnCoul = new JButton[9];
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		//afficher le contour du panel
+
+		int x = 100;
 
 		this.add(Box.createRigidArea(new Dimension(500,0)));
 		for(int cpt = 0; cpt < COULEURS_DISPONIBLE.length; cpt++)
@@ -35,6 +46,7 @@ public class PanelChoixCouleur extends JPanel implements ActionListener
 			this.add(this.tabBtnCoul[cpt]);
 			this.add(Box.createRigidArea(new Dimension(50,0)));
 			this.tabBtnCoul[cpt].addActionListener(this);
+			x += 60;
 		}
 
 		this.tabBtnCoul[8] = new JButton("+");
