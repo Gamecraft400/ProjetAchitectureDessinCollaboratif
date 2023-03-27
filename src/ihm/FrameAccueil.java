@@ -127,7 +127,6 @@ public class FrameAccueil extends JFrame implements ActionListener
                 System.out.println("IP : " + ip);
                 new FrameDessin(this.ctrl);
                 this.dispose();
-            
             }
         }
         else if(e.getSource() == this.btnRejoindre)
