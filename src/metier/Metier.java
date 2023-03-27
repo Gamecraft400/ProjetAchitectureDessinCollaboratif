@@ -63,7 +63,6 @@ public class Metier
     public void ajouterOutil(String outil, String texte, Color couleur2, int x, int y, int width, int height) 
     {
         this.alOutils.add(new Outil(outil, texte, couleur2, x, y, width, height));
-        System.out.println("ajouterOutil METIER");
     }
 
 
@@ -72,7 +71,6 @@ public class Metier
         for(ClientHandler client : this.alClient)
         {
             client.envoyerOutil(string);
-            System.out.println("envoyerOutil METIER");
         }
     }
 

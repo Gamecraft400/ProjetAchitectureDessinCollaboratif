@@ -64,10 +64,6 @@ public class Client implements Runnable
     
                         String[] infosOutil = message.split(";");
     
-                        for (String s : infosOutil) {
-                            System.out.println(s);
-                        }
-    
                         Outil outil = new Outil(infosOutil[1], infosOutil[2],
                                                 new Color(Integer.parseInt(infosOutil[3])), 
                                                 Integer.parseInt(infosOutil[4]), 
@@ -88,8 +84,6 @@ public class Client implements Runnable
                
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("==========client");
-                //break;   
             }    
         
     }

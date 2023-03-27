@@ -68,12 +68,10 @@ public class ClientHandler implements Runnable {
     {
         try {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            System.out.println("~~~~Handler  " + outil);
             out.println(outil);
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("====handler envoyer");
         }        
     }
 
@@ -83,7 +81,6 @@ public class ClientHandler implements Runnable {
             String outil = in.readLine();
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("====handler recevoir");
         }
     }
 }
