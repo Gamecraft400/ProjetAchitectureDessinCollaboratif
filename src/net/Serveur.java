@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import controleur.Controleur;
-import ihm.PanelDessin;
 import metier.Outil;
 
 public class Serveur extends Thread 

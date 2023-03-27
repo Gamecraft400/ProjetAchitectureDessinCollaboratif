@@ -99,60 +99,49 @@ public class PanelDessin extends JPanel implements MouseListener
         this.isFill = isFill;
     }
 
-    public void paint(Graphics g)
-    {
-        super.paint(g);
-        this.dessinerForme();
-    }
-
     /**
      * Dessine les formes
      */
-    public void paintComponent(Graphics g)
+    public void paint(Graphics g)
     {
-        Graphics g = this.getGraphics();
+        super.paint(g);
 
-        for( Outil outil : this.ctrl.getAlOutilsServeur() )
+    
+        for(Outil outil : this.outils)
         {
-            g.setColor(this.ctrl.getCouleur());
-
-            String nom = outil.getOutil();
-            int x = outil.getPosX();
-            int y = outil.getPosY();
-            int width = outil.getLargeur();
-            int height = outil.getHauteur();
-
-            if(nom.equals("Cercle"))
+            g.setColor(outil.getCouleur());
+            
+            if(outil.getOutil().equals("Cercle"))
             {
-
+                g.setColor(outil.getCouleur());
                 if(isFill)
-                {
-                    g.fillOval(x, y, width, height);
-                }
+                    g.fillOval(outil.getPosX(), outil.getPosY(), outil.getLargeur(), outil.getHauteur());
                 else
-                {
-                    g.drawOval(x, y, width, height);
-                }
+                    g.drawOval(outil.getPosX(), outil.getPosY(), outil.getLargeur(), outil.getHauteur());
             }
-            else if(nom.equals("Rectangle"))
+            else if(outil.getOutil().equals("Rectangle"))
             {
+                g.setColor(outil.getCouleur());
                 if(isFill)
-                {
-                    g.fillRect(x, y, width, height);
-                }
+                    g.fillRect(outil.getPosX(), outil.getPosY(), outil.getLargeur(), outil.getHauteur());
                 else
-                {
-                    g.drawRect(x, y, width, height);
-                }
+                    g.drawRect(outil.getPosX(), outil.getPosY(), outil.getLargeur(), outil.getHauteur());
             }
-            else if(nom.equals("Ligne"))
+            else if(outil.getOutil().equals("Ligne"))
             {
-                g.drawLine(x, y, width, height);
+                g.setColor(outil.getCouleur());
+                g.drawLine(outil.getPosX(), outil.getPosY(), outil.getLargeur(), outil.getHauteur());
             }
-            else if(nom.equals("Texte"))
+            else if(outil.getOutil().equals("Texte"))
             {
-                g.drawString(texte, x, y);
+                g.setColor(outil.getCouleur());
+                if(this.texte != null)
+                    g.drawString(outil.getLibelle(), outil.getPosX(), outil.getPosY());
             }
+
+            this.ctrl.envoyerOutil(outil.toString());
+            this.repaint();
+            
         }
 
 

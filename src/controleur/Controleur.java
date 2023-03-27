@@ -61,7 +61,6 @@ public class Controleur
     public void ajouterOutil(String string, String texte, Color couleur, int x, int y, int width, int height) 
     {
         this.metier.ajouterOutil(string, texte, couleur, x, y, width, height);
-        this.frameAccueil.getPanelDessin().repaint();
         System.out.println("ajouterOutil CTRL");
     }
 
