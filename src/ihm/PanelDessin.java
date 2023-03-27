@@ -92,9 +92,9 @@ public class PanelDessin extends JPanel implements MouseListener
     /**
      * Dessine les formes
      */
-    public void paintComponent(Graphics g)
+    public void paint(Graphics g)
     {
-        super.paintComponent(g);
+        super.paint(g);
 
         if(!this.outils.isEmpty())
         {
@@ -120,10 +120,12 @@ public class PanelDessin extends JPanel implements MouseListener
                 else if(outil.getOutil().equals("Texte"))
                 {
                     g.setColor(outil.getCouleur());
-                    g.drawString(outil.getLibelle(), outil.getPosX(), outil.getPosY());
+                    if(this.texte != null)
+                        g.drawString(outil.getLibelle(), outil.getPosX(), outil.getPosY());
                 }
 
                 this.ctrl.envoyerOutil(outil.toString());
+                this.repaint();
             }
         }
     }

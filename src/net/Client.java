@@ -51,16 +51,16 @@ public class Client implements Runnable
 
     public void run() 
     {
-       
             try {
 
+                
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                     String message = in.readLine();
 
-                
+                 
                     if (message.startsWith("FORME")) {
-    
+                        
     
                         String[] infosOutil = message.split(";");
     
@@ -74,8 +74,6 @@ public class Client implements Runnable
                                                 Integer.parseInt(infosOutil[5]), 
                                                 Integer.parseInt(infosOutil[6]), 
                                                 Integer.parseInt(infosOutil[7]));
-                        
-    
     
     
                         if(!this.aOutils.contains(outil)) 
@@ -83,15 +81,16 @@ public class Client implements Runnable
                             this.frameDessin.ajouterOutil(outil);
                             this.aOutils.add(outil);   
                         }
+                        message = in.readLine();
                 }
-                
-                
+ 
             
                
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("==========client");
                 //break;   
-            }                         
+            }    
+        
     }
 }
