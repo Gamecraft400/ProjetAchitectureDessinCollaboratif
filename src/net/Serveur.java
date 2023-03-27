@@ -66,7 +66,7 @@ public class Serveur extends Thread
         }
     }
 
-    public synchronized void envoyerOutil(String outil) {
+    public void envoyerOutil(String outil) {
         // Envoi de l'outil à tous les clients connectés
         for(ClientHandler client : this.ctrl.getAlClients()) {
             client.envoyerOutil(outil);

@@ -41,19 +41,10 @@ public class ClientHandler implements Runnable {
 
             this.alClients.add(this);
             
-            
-            while (true)
-            {
-                String outil = in.readLine();
-                
-                if (outil == null) 
-                {
-                    break;
-                }
+            String outil = in.readLine();
 
-                if (outil.startsWith("FORME")) {
-                    this.envoyerOutil(outil);
-                }
+            if (outil.startsWith("FORME")) {
+                this.envoyerOutil(outil);
             }
 
             
